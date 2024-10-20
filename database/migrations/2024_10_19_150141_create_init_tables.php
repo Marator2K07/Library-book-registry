@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('second_name');
             $table->string('surname');
-            $table->timestamp('year_of_birth');
+            $table->timestamp('day_of_birth');
         });
 
         Schema::create('books', function (Blueprint $table) {
@@ -24,7 +24,7 @@ return new class extends Migration
             $table->bigInteger('author_id')->unsigned();
             $table->string('title');
             $table->integer('publication_type');
-            $table->timestamp('year_of_publication');
+            $table->timestamp('day_of_publication');
 
             $table->foreign('author_id')->references('id')->on('authors');
         });
