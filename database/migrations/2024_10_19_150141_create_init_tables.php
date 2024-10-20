@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('authors', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->unique()->constrained();
             $table->string('name');
-            $table->string('second_name');
-            $table->string('surname');
-            $table->timestamp('day_of_birth');
+            $table->timestamp('day_of_birth')->nullable();
+            $table->timestamps();
         });
 
         Schema::create('books', function (Blueprint $table) {
@@ -25,6 +25,7 @@ return new class extends Migration
             $table->string('title');
             $table->integer('publication_type');
             $table->timestamp('day_of_publication');
+            $table->timestamps();
 
             $table->foreign('author_id')->references('id')->on('authors');
         });
@@ -32,12 +33,14 @@ return new class extends Migration
         Schema::create('genres', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->timestamps();
         });
 
         Schema::create('book_genre', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('book_id')->unsigned();
             $table->bigInteger('genre_id')->unsigned();
+            $table->timestamps();
 
             $table->foreign('book_id')->references('id')->on('genres');
             $table->foreign('genre_id')->references('id')->on('books');
