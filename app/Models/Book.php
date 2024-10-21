@@ -30,4 +30,14 @@ class Book extends Model
             'day_of_publication' => 'date'
         ];
     }
+
+    public function genres()
+    {
+        return $this->belongsToMany(
+            Genre::class,
+            'book_genre',
+            'book_id',
+            'genre_id'
+        );
+    }
 }
