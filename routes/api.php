@@ -9,4 +9,8 @@ Route::middleware('api')->group(function () {
         [BooksController::class, 'indexWith']
     );
 
+    Route::get(
+        constant('BOOKS_GET_START_PATH').'/{id}',
+        [BooksController::class, 'indexById']
+    );
 });

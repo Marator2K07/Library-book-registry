@@ -18,6 +18,19 @@ class BooksController extends Controller
     }
 
     /**
+     * Выдача книги по указанному айди
+     */
+    public function indexById(string $id)
+    {
+        $book = Book::find($id);
+        if (!$book) {
+            return response()->json(['error' => 'Book not found']);
+        }
+
+        return response()->json($book);
+    }
+
+    /**
      * Вывод данных с полем связанной сущности,
      * в нашем случае: это какая-либо часть автора
      */
