@@ -15,14 +15,14 @@ class HandleAPIRequests
 
         // если запрос к АПИ идет по путям, не требующих авторизации
         if (
-            strpos($requestPath, 'constants.API.API_BOOKS_GET_START_PATH') !== false
-            || strpos($requestPath, 'constants.API.API_AUTHORS_GET_START_PATH') !== false
-            || strpos($requestPath, 'constants.API.API_AUTHORS_GET_START_PATH') !== false
+            strpos($requestPath, constant('BOOKS_GET_START_PATH')) !== false
+            || strpos($requestPath, constant('AUTHORS_GET_START_PATH')) !== false
+            || strpos($requestPath, constant('GENRES_GET_START_PATH')) !== false
         ) {
             return $next($request);
         }
         // все остальные пути требуют авторизации
-        if (Auth::check()) {
+        if (!Auth::check()) {
             return response()->json(['error' => 'Unauthorized'], 401);
         }
 
