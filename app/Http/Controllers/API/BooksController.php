@@ -17,13 +17,21 @@ class BooksController extends Controller
         //
     }
 
-    public function indexWithAuthorName()
+    /**
+     * Вывод данных с полем связанной сущности,
+     * в нашем случае: это какая-либо часть автора
+     */
+    public function indexWith(Request $request)
     {
+        // обрабатываем параметр доп. вывода данных об авторе
+        $param = $request->input('author_field', 'id');
+        $newPropName = 'author_'.$param;
+
         $books = Book::paginate(10);
-        // добавляем к каждой книге сразу имя автора
+        // добавляем к каждой книге выбранное поле
         foreach ($books as $book) {
             $author = Author::find($book->author_id);
-            $book->author_name = $author->name;
+            $book->$newPropName = $author->$param;
         }
 
         return response()->json($books);
