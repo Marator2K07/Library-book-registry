@@ -16,13 +16,15 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // сначала добавляем админа и десять других пользователей
+        // сначала добавляем админа и других пользователей
         User::factory()->create([
             'name' => 'Admin',
             'email' => 'admin@example.com',
-            'password' => 'rootDB12345'
+            'password' => 'testAdminPass12345'
         ]);
-        User::factory(55)->create();
+        User::factory(55)->create([
+            'password' => 'testPass12345'
+        ]);
         // связываем юзеров с авторами
         $users = User::all();
         foreach ($users as $user) {
