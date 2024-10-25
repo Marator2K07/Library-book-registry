@@ -24,6 +24,17 @@ class BooksController extends Controller
     }
 
     /**
+     * Вывод книг с именем автора
+     */
+    public function indexWithAuthorName()
+    {
+        $books = Book::with('author:id,name')
+            ->paginate(constant('DEFAULT_PAGINATE_VALUE'));
+
+        return response()->json($books);
+    }
+
+    /**
      * Выдача книги по указанному айди
      */
     public function show(string $id)
@@ -37,26 +48,6 @@ class BooksController extends Controller
         }
 
         return response()->json($book);
-    }
-
-    /**
-     * Вывод данных с полем связанной сущности,
-     * в нашем случае: это какая-либо часть автора
-     */
-    public function indexWith(Request $request)
-    {
-        // обрабатываем параметр доп. вывода данных об авторе
-        $param = $request->input('author_field', 'id');
-        $newPropName = 'author_'.$param;
-
-        $books = Book::paginate(10);
-        // добавляем к каждой книге выбранное поле
-        foreach ($books as $book) {
-            $author = Author::find($book->author_id);
-            $book->$newPropName = $author->$param;
-        }
-
-        return response()->json($books);
     }
 
     /**
@@ -85,7 +76,7 @@ class BooksController extends Controller
                 $preValue = $book->getOriginal($key);
                 $book->update([$key => $value]);
                 $log->info(
-                    'Обновление полей книги',
+                    'Обновление книги',
                     ['prev_' . $key => $preValue, 'new_' . $key => $book->$key]
                 );
             }
