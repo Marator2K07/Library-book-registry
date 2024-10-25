@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\BookUpdateRequest;
 use App\Models\Author;
 use App\Models\Book;
 use Illuminate\Http\Request;
@@ -20,7 +21,7 @@ class BooksController extends Controller
     /**
      * Выдача книги по указанному айди
      */
-    public function indexById(string $id)
+    public function show(string $id)
     {
         $book = Book::find($id);
         if (!$book) {
@@ -51,27 +52,38 @@ class BooksController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(BookUpdateRequest $request, string $id)
     {
-        //
+        // прежде всего проверка на валидность
+        if ($request->validator->fails()) {
+            return response()->json([
+                'errors' => $request->validator->getMessageBag()
+            ], 422);
+        }
+        // возможен ли доступ к книге
+        $book = Book::find($id);
+        if (!$book) {
+            return response()->json(['error' => 'Book not found']);
+        }
+        // проверка на принадлежность книги автору
+        $user = json_decode($request->header('Auth-User'));
+        $bookAuthor = $book->author;
+        if ($user->id !== $bookAuthor->user->id) {
+            return response()->json([
+                'error' => 'You do not have access to this book.'
+            ], 422);
+        }
+        // смотрим какие поля нужно поменять и меняем
+        $params = $request->all();
+        foreach ($params as $key => $value) {
+            $book->update([$key => $value]);
+        }
+
+        return response()->json([
+            'message' => 'Book succesfully updated'
+        ]);
     }
 
     /**
