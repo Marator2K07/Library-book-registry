@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class Book extends Model
 {
@@ -44,5 +45,14 @@ class Book extends Model
     public function author()
     {
         return $this->belongsTo(Author::class, 'author_id');
+    }
+
+    /**
+     * Получение связанной записи из таблицы отношения книг и жанров
+     * по айди книги
+     */
+    public function bookGenreRelatedRow()
+    {
+        return DB::table('book_genre')->where('book_id', $this->id);
     }
 }
