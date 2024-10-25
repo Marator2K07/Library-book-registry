@@ -19,13 +19,7 @@ class AuthController extends Controller
         // пытаемся получить токен подключения
         if (Auth::attempt($credentials)) {
             $user = User::findByEmail($request->input('email'));
-            $token = $user
-                ->createToken(
-                    'Access token',
-                    ['user'.$user->email],
-                    now()->addDay()
-                )
-                ->plainTextToken;
+            $token = $user->createToken('Access token')->plainTextToken;
             return response()->json(['message' => 'Access granted', 'token' => $token]);
         } else {
             return response()->json(['error' => 'Wrong user credentials'], 401);
