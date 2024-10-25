@@ -67,7 +67,8 @@ class BooksController extends Controller
             $book = $this->bookExists($id);
             $user = json_decode($request->header('Auth-User'));
             $this->authorsСompliance($user, $book);
-            // смотрим какие поля нужно поменять и меняем (+логирование)
+            // смотрим какие поля нужно поменять и меняем
+            // (немного жертвуем реализацией ради дробленного логирования)
             $params = $request->all();
             foreach ($params as $key => $value) {
                 $preValue = $book->getOriginal($key);
