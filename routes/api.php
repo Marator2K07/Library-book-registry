@@ -21,6 +21,11 @@ Route::middleware('api')->group(function () {
     );
 
     Route::post(
+        constant('BOOKS_DELETE_START_PATH').'/{id}',
+        [BooksController::class, 'destroy']
+    );
+
+    Route::post(
         constant('AUTHORS_AUTH_START_PATH').'/login',
         [AuthController::class, 'login']
     );

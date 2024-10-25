@@ -9,6 +9,7 @@ use App\Models\Author;
 use App\Models\Book;
 use App\Services\LogService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class BooksController extends Controller
 {
@@ -100,8 +101,26 @@ class BooksController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
-    {
-        //
+    public function destroy(
+        LogService $log,
+        BookUpdateRequest $request,
+        string $id
+    ) {
+        try {
+            // подготовка (предпроверки по совместительству через trait)
+            $book = $this->bookExists($id);
+            $user = json_decode($request->header('Auth-User'));
+            $this->authorsСompliance($user, $book);
+            // удаление (+лог)
+            $book->bookGenreRelatedRow()->delete();
+            $book->delete();
+            $log->info('Удаление книги', ['book' => $book]);
+        } catch (\Throwable $th) {
+            return response()->json(['error' => $th->getMessage()], 422);
+        }
+
+        return response()->json([
+            'message' => 'Book succesfully deleted'
+        ]);
     }
 }
