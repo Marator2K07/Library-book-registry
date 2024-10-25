@@ -18,7 +18,7 @@ class HandleAPIRequests
             strpos($requestPath, constant('BOOKS_GET_START_PATH')) !== false
             || strpos($requestPath, constant('AUTHORS_GET_START_PATH')) !== false
             || strpos($requestPath, constant('GENRES_GET_START_PATH')) !== false
-            || strpos($requestPath, constant('AUTHORS_AUTH_START_PATH')) !== false
+            || strpos($requestPath, constant('AUTHORS_AUTH_PATH')) !== false
         ) {
             return $next($request);
         }
