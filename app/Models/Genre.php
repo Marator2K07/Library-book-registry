@@ -14,6 +14,7 @@ class Genre extends Model
      * Скрывает данные от показа
      */
     protected $hidden = [
+        'pivot',
         'created_at',
         'updated_at'
     ];

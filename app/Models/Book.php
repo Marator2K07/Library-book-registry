@@ -15,6 +15,7 @@ class Book extends Model
      * Скрывает данные от показа
      */
     protected $hidden = [
+        'pivot',
         'author_id',
         'created_at',
         'updated_at'

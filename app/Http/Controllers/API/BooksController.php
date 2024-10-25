@@ -32,6 +32,14 @@ class BooksController extends Controller
     }
 
     /**
+     * Store a newly created resource in storage.
+     */
+    public function store(BookUpdateRequest $request)
+    {
+        //
+    }
+
+    /**
      * Выдача книги по указанному айди
      */
     public function show(string $id)
