@@ -4,11 +4,14 @@ namespace App\Http\Controllers\API;
 
 use App\Models\User;
 use App\Http\Controllers\Controller;
+use App\Http\Traits\AuthorControllerTrait;
 use App\Models\Author;
 use Illuminate\Http\Request;
 
 class AuthorController extends Controller
 {
+    use AuthorControllerTrait;
+
     /**
      * Display a listing of the resource.
      */
