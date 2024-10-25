@@ -32,6 +32,10 @@ Route::middleware('api')->group(function () {
         constant('AUTHORS_GET_START_PATH').'/{id}_with_books',
         [AuthorController::class, 'showWithBooks']
     );
+    Route::post(
+        constant('AUTHORS_UPDATE_START_PATH').'/{id}',
+        [AuthorController::class, 'update']
+    );
     // для авторизации
     Route::post(
         constant('AUTHORS_AUTH_PATH').'/login',

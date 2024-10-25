@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\AuthorUpdateRequest;
 use App\Http\Traits\AuthorControllerTrait;
 use App\Models\Author;
 use Illuminate\Http\Request;
@@ -68,9 +69,31 @@ class AuthorController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(AuthorUpdateRequest $request, string $id)
     {
-        //
+        // прежде всего проверка на валидность
+        if ($request->validator->fails()) {
+            return response()->json([
+                'errors' => $request->validator->getMessageBag()
+            ], 422);
+        }
+
+        try {
+            // подготовка (предпроверки по совместительству через trait)
+            $author = $this->authorExists($id);
+            $user = json_decode($request->header('Auth-User'));
+            $this->userСompliance($author, $user);
+            // пытаемся обновить все входящие параметры у автора и связанного аккаунта
+            $params = $request->all();
+            $author->update($params);
+            $author->user->update($params);
+        } catch (\Throwable $th) {
+            return response()->json(['error' => $th->getMessage()], 422);
+        }
+
+        return response()->json([
+            'message' => 'Author succesfully updated'
+        ]);
     }
 
     /**
