@@ -25,7 +25,9 @@ class HandleAPIRequests
         // (все остальные пути требуют авторизации)
         // пытаемся получить экземпляр токена
         $tokenValue = $request->header('Authorization');
-        $token = PersonalAccessToken::findToken(explode(" ", $tokenValue)[1]);
+        $token = ($tokenValue)
+            ? PersonalAccessToken::findToken(explode(" ", $tokenValue)[1])
+            : null;
         if (!$tokenValue || !$token) {
             return response()->json(['error' => 'Unauthorized access attempt'], 401);
         }
