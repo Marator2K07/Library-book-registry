@@ -16,4 +16,14 @@ trait AuthorControllerTrait
         return $author;
     }
 
+    /**
+     * проверка на соотвествие автора и авторизованного пользователя
+     */
+    protected function userСompliance($author, $user)
+    {
+        $authorUser = $author->user;
+        if ($user->id !== $authorUser->id) {
+            throw new \Exception('You do not have access to this author data.');
+        }
+    }
 }
