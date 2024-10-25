@@ -3,6 +3,7 @@
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\AuthorController;
 use App\Http\Controllers\API\BooksController;
+use App\Http\Controllers\API\GenreController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('api')->group(function () {
@@ -35,6 +36,11 @@ Route::middleware('api')->group(function () {
     Route::post(
         constant('AUTHORS_UPDATE_START_PATH').'/{id}',
         [AuthorController::class, 'update']
+    );
+    // для жанров
+    Route::get(
+        constant('GENRES_GET_START_PATH').'_with_books',
+        [GenreController::class, 'indexWithBooks']
     );
     // для авторизации
     Route::post(
