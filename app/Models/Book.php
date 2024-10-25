@@ -12,6 +12,15 @@ class Book extends Model
     use HasFactory;
 
     /**
+     * Скрывает данные от показа
+     */
+    protected $hidden = [
+        'author_id',
+        'created_at',
+        'updated_at'
+    ];
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array<int, string>

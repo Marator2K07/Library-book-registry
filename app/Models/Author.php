@@ -12,6 +12,15 @@ class Author extends Model
     use HasFactory, Notifiable;
 
     /**
+     * Скрывает данные от показа
+     */
+    protected $hidden = [
+        'user_id',
+        'created_at',
+        'updated_at'
+    ];
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array<int, string>
@@ -34,5 +43,10 @@ class Author extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function books()
+    {
+        return $this->hasMany(Book::class);
     }
 }
