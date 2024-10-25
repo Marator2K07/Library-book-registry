@@ -4,14 +4,16 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\BookUpdateRequest;
+use App\Http\Traits\BookControllerTrait;
 use App\Models\Author;
 use App\Models\Book;
 use App\Services\LogService;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
 class BooksController extends Controller
 {
+    use BookControllerTrait;
+
     /**
      * Display a listing of the resource.
      */
@@ -25,9 +27,12 @@ class BooksController extends Controller
      */
     public function show(string $id)
     {
-        $book = Book::find($id);
-        if (!$book) {
-            return response()->json(['error' => 'Book not found']);
+        try {
+            $book = $this->bookExists($id);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'error' => $th->getMessage()
+            ], 422);
         }
 
         return response()->json($book);
@@ -67,28 +72,24 @@ class BooksController extends Controller
                 'errors' => $request->validator->getMessageBag()
             ], 422);
         }
-        // возможен ли доступ к книге
-        $book = Book::find($id);
-        if (!$book) {
-            return response()->json(['error' => 'Book not found']);
-        }
-        // проверка на принадлежность книги автору
-        $user = json_decode($request->header('Auth-User'));
-        $bookAuthor = $book->author;
-        if ($user->id !== $bookAuthor->user->id) {
-            return response()->json([
-                'error' => 'You do not have access to this book.'
-            ], 422);
-        }
-        // смотрим какие поля нужно поменять и меняем (+логирование)
-        $params = $request->all();
-        foreach ($params as $key => $value) {
-            $preValue = $book->getOriginal($key);
-            $book->update([$key => $value]);
-            $log->info(
-                'Обновление полей книги',
-                ['prev_'.$key => $preValue, 'new_'.$key => $book->$key]
-            );
+
+        try {
+            // подготовка (предпроверки по совместительству через trait)
+            $book = $this->bookExists($id);
+            $user = json_decode($request->header('Auth-User'));
+            $this->authorsСompliance($user, $book);
+            // смотрим какие поля нужно поменять и меняем (+логирование)
+            $params = $request->all();
+            foreach ($params as $key => $value) {
+                $preValue = $book->getOriginal($key);
+                $book->update([$key => $value]);
+                $log->info(
+                    'Обновление полей книги',
+                    ['prev_' . $key => $preValue, 'new_' . $key => $book->$key]
+                );
+            }
+        } catch (\Throwable $th) {
+            return response()->json(['error' => $th->getMessage()], 422);
         }
 
         return response()->json([
