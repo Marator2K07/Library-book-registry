@@ -5,11 +5,8 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\BookUpdateRequest;
 use App\Http\Traits\BookControllerTrait;
-use App\Models\Author;
 use App\Models\Book;
 use App\Services\LogService;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
 class BooksController extends Controller
 {

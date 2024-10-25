@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Models\User;
 use App\Http\Controllers\Controller;
 use App\Http\Traits\AuthorControllerTrait;
 use App\Models\Author;
@@ -45,6 +44,25 @@ class AuthorController extends Controller
     public function show(string $id)
     {
         //
+    }
+
+    /**
+     * Показ автора со списком его книг
+     */
+    public function showWithBooks(string $id)
+    {
+        try {
+            $author = $this
+                ->authorExists($id)
+                ->with('books')
+                ->findOrFail($id);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'error' => $th->getMessage()
+            ], 422);
+        }
+
+        return response()->json($author);
     }
 
     /**
