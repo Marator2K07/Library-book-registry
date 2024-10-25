@@ -6,7 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\BookUpdateRequest;
 use App\Models\Author;
 use App\Models\Book;
+use App\Services\LogService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class BooksController extends Controller
 {
@@ -54,8 +56,11 @@ class BooksController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(BookUpdateRequest $request, string $id)
-    {
+    public function update(
+        LogService $log,
+        BookUpdateRequest $request,
+        string $id
+    ) {
         // прежде всего проверка на валидность
         if ($request->validator->fails()) {
             return response()->json([
@@ -75,10 +80,15 @@ class BooksController extends Controller
                 'error' => 'You do not have access to this book.'
             ], 422);
         }
-        // смотрим какие поля нужно поменять и меняем
+        // смотрим какие поля нужно поменять и меняем (+логирование)
         $params = $request->all();
         foreach ($params as $key => $value) {
+            $preValue = $book->getOriginal($key);
             $book->update([$key => $value]);
+            $log->info(
+                'Обновление полей книги',
+                ['prev_'.$key => $preValue, 'new_'.$key => $book->$key]
+            );
         }
 
         return response()->json([
