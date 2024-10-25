@@ -12,7 +12,12 @@ Route::middleware('api')->group(function () {
 
     Route::get(
         constant('BOOKS_GET_START_PATH').'/{id}',
-        [BooksController::class, 'indexById']
+        [BooksController::class, 'show']
+    );
+
+    Route::post(
+        constant('BOOKS_UPDATE_START_PATH').'/{id}',
+        [BooksController::class, 'update']
     );
 
     Route::post(
