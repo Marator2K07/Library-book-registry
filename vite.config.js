@@ -4,10 +4,17 @@ import react from '@vitejs/plugin-react';
 
 export default defineConfig({
     plugins: [
+        react(),
         laravel({
             input: 'resources/js/app.jsx',
             refresh: true,
+            manifest: true,
         }),
-        react(),
     ],
+    server: {
+        hmr: {
+            host: 'localhost',
+            port: 8000,
+        },
+    }
 });
