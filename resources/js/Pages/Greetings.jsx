@@ -1,7 +1,9 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import { Head } from '@inertiajs/react';
+import { Head, usePage } from '@inertiajs/react';
 
 export default function Greetings() {
+    const roles = JSON.parse(usePage().props.auth.user.role);
+
     return (
         <AuthenticatedLayout
             header={
@@ -16,7 +18,13 @@ export default function Greetings() {
                 <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
                     <div className="overflow-hidden bg-white shadow-sm sm:rounded-lg dark:bg-gray-800">
                         <div className="p-6 text-gray-900 dark:text-gray-100">
-                            You're logged in!
+                            {
+                                roles.admin
+                                    ?
+                                    <p>You login as administrator. Full access granted.</p>
+                                    :
+                                    <p>You login as usual user. Access restricted.</p>
+                            }
                         </div>
                     </div>
                 </div>
