@@ -18,6 +18,7 @@ class DatabaseSeeder extends Seeder
     {
         // сначала добавляем админа и других пользователей
         User::factory()->create([
+            'role' => json_encode(['admin' => true, 'author' => true]),
             'name' => 'Admin',
             'email' => 'admin@example.com',
             'password' => 'testAdminPass12345'
@@ -28,6 +29,9 @@ class DatabaseSeeder extends Seeder
         // связываем юзеров с авторами
         $users = User::all();
         foreach ($users as $user) {
+            if ($user->isAdmin()) {
+                continue;
+            }
             Author::factory()->create([
                 'name' => $user->name,
                 'user_id' => $user->id
