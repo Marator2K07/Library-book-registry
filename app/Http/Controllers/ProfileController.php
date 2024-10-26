@@ -31,6 +31,12 @@ class ProfileController extends Controller
     {
         $request->user()->fill($request->validated());
 
+        // обновляем заодно и имя автора (если есть связь)
+        $author = $request->user()->author;
+        if ($author) {
+            $author->update($request->validated());
+        }
+
         if ($request->user()->isDirty('email')) {
             $request->user()->email_verified_at = null;
         }
