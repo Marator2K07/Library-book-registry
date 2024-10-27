@@ -16,7 +16,7 @@ export default function Greetings() {
 
             <div className="py-12">
                 <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
-                    <div className="overflow-hidden bg-white shadow-sm sm:rounded-lg dark:bg-gray-800">
+                    <div className="overflow-hidden bg-white shadow-sm sm:rounded-lg dark:bg-gray-800 dark:ring-red-700 ring-1 ring-white/[0.05]">
                         <div className="p-6 text-gray-900 dark:text-gray-100">
                             {
                                 roles.admin
