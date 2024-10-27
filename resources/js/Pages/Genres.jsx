@@ -1,13 +1,20 @@
+import DangerButton from '@/Components/DangerButton';
 import PrimaryButton from '@/Components/PrimaryButton';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout'
-import { Head, useForm, usePage } from '@inertiajs/react'
-import React, { useEffect, useState } from 'react'
+import { Head, usePage } from '@inertiajs/react'
+import React, { useState } from 'react'
+import CreateGenreForm from './Profile/Partials/Genre/CreateGenreForm';
 
 export default function Genres() {
     const { genres, links } = usePage().props;
-    if (genres && links) {
-        console.log(links);
+    const [showCreateGenreForm, setShowCreateGenreForm] = useState(false);
 
+    // управление показом формы создания нового жанра
+    const handleCreateGenreForm = () => {
+        setShowCreateGenreForm(!showCreateGenreForm);
+    };
+
+    if (genres && links) {
         return (
             <AuthenticatedLayout
                 header={
@@ -30,16 +37,15 @@ export default function Genres() {
                             </thead>
                             <tbody>
                                 {genres.data.map(genre => (
-                                    <tr key={genre.id}>
-                                        <td>{genre.id}. </td>
-                                        <td>{genre.name}</td>
+                                    <tr
+                                        key={genre.id}
+                                        className="ring-1 dark:ring-red-900 rounded-lg"
+                                    >
+                                        <td className="p-1">{genre.id}. </td>
+                                        <td className="p-1">{genre.name}</td>
                                         <td className="p-1">
-                                            <PrimaryButton className="btn btn-info mr-2" onClick={() => handleEdit(genre)}>
-                                                Update
-                                            </PrimaryButton>
-                                            <PrimaryButton className="btn btn-danger" onClick={() => handleDelete(genre.id)}>
-                                                Delete
-                                            </PrimaryButton>
+                                            <PrimaryButton className="btn btn-info mr-2">Update</PrimaryButton>
+                                            <DangerButton>Delete</DangerButton>
                                         </td>
                                     </tr>
                                 ))}
@@ -47,28 +53,45 @@ export default function Genres() {
                         </table>
                     </div>
 
+                    <div className="absolute dark:bg-gray-700 ring-1 rounded-lg">
+                        <CreateGenreForm
+                            className="container flex flex-col w-max rounded-lg bg-white p-6 m-5 shadow-[0px_14px_34px_0px_rgba(0,0,0,0.08)] ring-1 ring-white/[0.05] dark:bg-gray-800 dark:ring-red-700"
+                            hidden={showCreateGenreForm}
+                            setHidden={handleCreateGenreForm}
+                        />
+                    </div>
+
                     <div className="container flex w-max gap-4 rounded-lg bg-white p-6 m-5 shadow-[0px_14px_34px_0px_rgba(0,0,0,0.08)] ring-1 ring-white/[0.05] dark:bg-gray-800 dark:ring-red-700">
                         {links.previous &&
-                            <PrimaryButton
-                                className="btn btn-outline-secondary"
-                                onClick={() => Inertia.get(links.previous)}>
-                                Previous page
+                            <PrimaryButton className="btn btn-outline-secondary">
+                                <a className="page-link" href={links.previous}>Previous page</a>
                             </PrimaryButton>}
-                        <PrimaryButton disabled={processing} onClick={handleCreate}>
+                        <PrimaryButton onClick={() => handleCreateGenreForm()}>
                             New genre
                         </PrimaryButton>
                         {links.next &&
-                            <PrimaryButton
-                                className="btn btn-outline-secondary"
-                                onClick={() => Inertia.get(links.next)}>
-                                Next page
+                            <PrimaryButton className="btn btn-outline-secondary">
+                                <a className="page-link" href={links.next}>Next page</a>
                             </PrimaryButton>}
                     </div>
                 </div>
             </AuthenticatedLayout>
         )
     } else {
-
+        return (
+            <AuthenticatedLayout
+                header={
+                    <h2 className="text-xl font-semibold leading-tight text-gray-800 dark:text-gray-200">
+                        Book genres
+                    </h2>
+                }
+            >
+                <div className="flex flex-col items-center justify-center">
+                    <div className="container text-white flex w-max rounded-lg bg-white p-6 m-5 shadow-[0px_14px_34px_0px_rgba(0,0,0,0.08)] ring-1 ring-white/[0.05] dark:bg-gray-800 dark:ring-red-700">
+                        Loading...
+                    </div>
+                </div>
+            </AuthenticatedLayout>
+        )
     }
-
 }
