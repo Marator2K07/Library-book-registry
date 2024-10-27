@@ -1,0 +1,94 @@
+import InputError from '@/Components/InputError';
+import InputLabel from '@/Components/InputLabel';
+import PrimaryButton from '@/Components/PrimaryButton';
+import TextInput from '@/Components/TextInput';
+import { Transition } from '@headlessui/react';
+import { useForm } from '@inertiajs/react';
+import { useRef } from 'react';
+
+export default function CreateGenreForm({ className = '', hidden = false }) {
+    const nameInput = useRef();
+
+    const {
+        data,
+        setData,
+        errors,
+        post,
+        reset,
+        processing,
+        recentlySuccessful,
+    } = useForm({ name: '' });
+
+    const createGenre = (e) => {
+        e.preventDefault();
+
+        post(route('genres.store'), {
+            preserveScroll: true,
+            onSuccess: () => reset(),
+            onError: (errors) => {
+                if (errors.name) {
+                    reset('name');
+                    nameInput.current.focus();
+                }
+            },
+        });
+    };
+
+    return (
+        <Transition
+            show={hidden}
+            enter="transition ease-in-out"
+            enterFrom="opacity-0"
+            leave="transition ease-in-out"
+            leaveTo="opacity-0"
+        >
+            <section className={className}>
+                <header>
+                    <h2 className="text-lg font-medium text-gray-900 dark:text-gray-100">
+                        New genre
+                    </h2>
+                    <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">
+                        Create new book genre with entered name.
+                    </p>
+                </header>
+
+                <form onSubmit={createGenre} className="mt-6 space-y-6">
+                    <div>
+                        <InputLabel
+                            htmlFor="name"
+                            value="Name"
+                        />
+                        <TextInput
+                            id="name"
+                            ref={nameInput}
+                            value={data.name}
+                            onChange={(e) =>
+                                setData('name', e.target.value)
+                            }
+                            className="mt-1 block w-full"
+                        />
+                        <InputError
+                            message={errors.name}
+                            className="mt-2"
+                        />
+                    </div>
+
+                    <div className="flex items-center gap-4">
+                        <PrimaryButton disabled={processing}>Create</PrimaryButton>
+                        <Transition
+                            show={recentlySuccessful}
+                            enter="transition ease-in-out"
+                            enterFrom="opacity-0"
+                            leave="transition ease-in-out"
+                            leaveTo="opacity-0"
+                        >
+                            <p className="text-sm text-gray-600 dark:text-gray-400">
+                                New genre succesfully created
+                            </p>
+                        </Transition>
+                    </div>
+                </form>
+            </section>
+        </Transition>
+    );
+}
