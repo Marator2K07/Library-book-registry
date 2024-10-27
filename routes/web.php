@@ -20,13 +20,19 @@ Route::get('/greetings', function () {
 })->middleware(['auth', 'verified'])->name('greetings');
 
 Route::middleware('auth')->group(function () {
-    Route::get('/genres', [GenreController::class, 'index'])->name('genres.index');
+    Route::get('/genres', [GenreController::class, 'index'])
+        ->name('genres.index');
+    Route::post('/genres', [GenreController::class, 'store'])
+        ->name('genres.store');
 });
 
 Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::get('/profile', [ProfileController::class, 'edit'])
+        ->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])
+        ->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])
+        ->name('profile.destroy');
 });
 
 require __DIR__.'/auth.php';

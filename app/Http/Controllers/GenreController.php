@@ -38,7 +38,12 @@ class GenreController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // т.к. сущность простая, валидацию можно провести на месте
+        $request->validate(['name' => 'required|unique:genres,name|string|max:65']);
+
+        Genre::create(['name' => $request->name]);
+
+        return redirect()->route('genres.index');
     }
 
     /**
