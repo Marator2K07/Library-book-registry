@@ -1,12 +1,16 @@
 import InputError from '@/Components/InputError';
 import InputLabel from '@/Components/InputLabel';
 import PrimaryButton from '@/Components/PrimaryButton';
+import SecondaryButton from '@/Components/SecondaryButton';
 import TextInput from '@/Components/TextInput';
 import { Transition } from '@headlessui/react';
 import { useForm } from '@inertiajs/react';
 import { useRef } from 'react';
 
-export default function CreateGenreForm({ className = '', hidden = false }) {
+export default function CreateGenreForm({
+    className = '',
+    hidden = false,
+    setHidden = null }) {
     const nameInput = useRef();
 
     const {
@@ -73,8 +77,11 @@ export default function CreateGenreForm({ className = '', hidden = false }) {
                         />
                     </div>
 
-                    <div className="flex items-center gap-4">
-                        <PrimaryButton disabled={processing}>Create</PrimaryButton>
+                    <div className="flex flex-col items-center gap-4">
+                        <div className="flex items-center gap-4">
+                            <PrimaryButton disabled={processing}>Create</PrimaryButton>
+                            <SecondaryButton action={setHidden}>Back</SecondaryButton>
+                        </div>
                         <Transition
                             show={recentlySuccessful}
                             enter="transition ease-in-out"
