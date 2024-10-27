@@ -30,6 +30,12 @@ export default function AuthenticatedLayout({ header, children }) {
                                 >
                                     Greetings
                                 </NavLink>
+                                <NavLink
+                                    href={route('book_genres')}
+                                    active={route().current('book_genres')}
+                                >
+                                    Book Genres
+                                </NavLink>
                             </div>
                         </div>
 
@@ -133,6 +139,14 @@ export default function AuthenticatedLayout({ header, children }) {
                             active={route().current('greetings')}
                         >
                             Greetings
+                        </ResponsiveNavLink>
+                    </div>
+                    <div className="space-y-1 pb-3 pt-2">
+                        <ResponsiveNavLink
+                            href={route('book_genres')}
+                            active={route().current('book_genres')}
+                        >
+                            Book Genres
                         </ResponsiveNavLink>
                     </div>
 

@@ -7,7 +7,7 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
             <div className="bg-gray-50 text-black/50 dark:bg-black dark:text-white/50">
                 <img
                     id="background"
-                    className="absolute -left-20 top-0 max-w-[777px]"
+                    className="absolute -left-70 top-0 max-w-[500px]"
                     src="https://laravel.com/assets/img/welcome/background.svg"
                 />
                 <div className="relative flex min-h-screen flex-col items-center justify-center selection:bg-[#FF2D20] selection:text-white">
@@ -75,12 +75,15 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
                                         <h2 className="text-2xl font-semibold text-black dark:text-white">
                                             Book registry
                                         </h2>
-                                        <p className="mt-4 text-sm/relaxed">
+                                        <p className="mt-4">
                                             Welcome to our library!
                                         </p>
-                                        <p className="mt-4 text-sm/relaxed">
-                                            /Login or register to start administering\
+                                        <p className="mt-4">
+                                            /Ask your system administrator for details to<br/> log in as admin or regular user (author)\
                                         </p>
+                                        <div className="mt-5 text-sm/relaxed">
+                                            !Warning - for normal access, authors must use API!
+                                        </div>
                                     </div>
                                 </div>
                             </div>
