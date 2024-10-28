@@ -45,7 +45,14 @@ class GenreController extends Controller
      */
     public function update(Request $request, Genre $genre)
     {
-        //
+        $request->validate(
+            ['name' => 'required|unique:genres,name|string|max:65']
+        );
+
+        $genre->name = $request->name;
+        $genre->save();
+
+        return redirect()->route('genres.index');
     }
 
     /**
