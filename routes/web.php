@@ -24,7 +24,9 @@ Route::middleware(['auth', 'checkAdmin'])->group(function () {
         ->name('genres.index');
     Route::post('/genres', [GenreController::class, 'store'])
         ->name('genres.store');
-    Route::post('/genres/{genre}', [GenreController::class, 'destroy'])
+    Route::post('/genres/{genre}', [GenreController::class, 'update'])
+        ->name('genres.update');
+    Route::delete('/genres/{genre}', [GenreController::class, 'destroy'])
         ->name('genres.destroy');
 });
 
@@ -37,4 +39,4 @@ Route::middleware('auth')->group(function () {
         ->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
