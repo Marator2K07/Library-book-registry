@@ -7,7 +7,8 @@ import { useForm } from '@inertiajs/react';
 export default function DeleteGenreForm({
     className = '',
     hidden = false,
-    setHidden = null }) {
+    setHidden = null,
+    idForDeletion = null }) {
 
     const {
         post,
@@ -18,7 +19,7 @@ export default function DeleteGenreForm({
     const handleDelete = (e) => {
         e.preventDefault();
 
-        post(route('genres.destroy', {id: 33}), {
+        post(route('genres.destroy', {id: idForDeletion}), {
             preserveScroll: true,
             onSuccess: () => {
                 setTimeout(() => {
