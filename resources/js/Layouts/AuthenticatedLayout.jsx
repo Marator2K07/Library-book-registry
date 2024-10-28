@@ -7,6 +7,7 @@ import { useState } from 'react';
 
 export default function AuthenticatedLayout({ header, children }) {
     const user = usePage().props.auth.user;
+    const roles = JSON.parse(usePage().props.auth.user.role);
 
     const [showingNavigationDropdown, setShowingNavigationDropdown] =
         useState(false);
@@ -30,12 +31,17 @@ export default function AuthenticatedLayout({ header, children }) {
                                 >
                                     Greetings
                                 </NavLink>
-                                <NavLink
-                                    href={route('genres.index')}
-                                    active={route().current('genres.index')}
-                                >
-                                    Book Genres
-                                </NavLink>
+                                {
+                                    roles.admin &&
+                                    <div className="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                                        <NavLink
+                                            href={route('genres.index')}
+                                            active={route().current('genres.index')}
+                                        >
+                                            Book Genres
+                                        </NavLink>
+                                    </div>
+                                }
                             </div>
                         </div>
 
@@ -133,23 +139,27 @@ export default function AuthenticatedLayout({ header, children }) {
                         ' sm:hidden'
                     }
                 >
-                    <div className="space-y-1 pb-3 pt-2">
-                        <ResponsiveNavLink
-                            href={route('greetings')}
-                            active={route().current('greetings')}
-                        >
-                            Greetings
-                        </ResponsiveNavLink>
-                    </div>
-                    <div className="space-y-1 pb-3 pt-2">
-                        <ResponsiveNavLink
-                            href={route('genres.index')}
-                            active={route().current('genres.index')}
-                        >
-                            Book Genres
-                        </ResponsiveNavLink>
-                    </div>
-
+                    {
+                        roles.admin &&
+                        <div>
+                            <div className="space-y-1 pb-3 pt-2">
+                                <ResponsiveNavLink
+                                    href={route('greetings')}
+                                    active={route().current('greetings')}
+                                >
+                                    Greetings
+                                </ResponsiveNavLink>
+                            </div>
+                            <div className="space-y-1 pb-3 pt-2">
+                                <ResponsiveNavLink
+                                    href={route('genres.index')}
+                                    active={route().current('genres.index')}
+                                >
+                                    Book Genres
+                                </ResponsiveNavLink>
+                            </div>
+                        </div>
+                    }
                     <div className="border-t border-gray-200 pb-1 pt-4 dark:border-gray-600">
                         <div className="px-4">
                             <div className="text-base font-medium text-gray-800 dark:text-gray-200">
