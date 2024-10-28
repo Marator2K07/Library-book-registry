@@ -1,6 +1,6 @@
-import { DELAY_AFTER_SUCCESSFULLY_ACTION } from '@/app';
 import DangerButton from '@/Components/DangerButton';
 import SecondaryButton from '@/Components/SecondaryButton';
+import { DELAY_AFTER_SUCCESSFULLY_ACTION } from '@/constants';
 import { Transition } from '@headlessui/react';
 import { useForm } from '@inertiajs/react';
 

@@ -1,9 +1,9 @@
-import { DELAY_AFTER_SUCCESSFULLY_ACTION } from '@/app';
 import InputError from '@/Components/InputError';
 import InputLabel from '@/Components/InputLabel';
 import PrimaryButton from '@/Components/PrimaryButton';
 import SecondaryButton from '@/Components/SecondaryButton';
 import TextInput from '@/Components/TextInput';
+import { DELAY_AFTER_SUCCESSFULLY_ACTION } from '@/constants';
 import { Transition } from '@headlessui/react';
 import { useForm } from '@inertiajs/react';
 import { useRef } from 'react';
