@@ -6,25 +6,45 @@ import React, { useState } from 'react'
 import CreateGenreForm from './Profile/Partials/Genre/CreateGenreForm';
 import { Transition } from '@headlessui/react';
 import DeleteGenreForm from './Profile/Partials/Genre/DeleteGenreForm';
+import UpdateGenreForm from './Profile/Partials/Genre/UpdateGenreForm';
 
 export default function Genres() {
     const { genres, links } = usePage().props;
     const [genreForDeletion, setGenreForDeletion] = useState(null);
+    const [genreForUpdate, setGenreForUpdate] = useState(null);
     const [showModal, setShowModal] = useState(false);
     const [showCreateGenreForm, setShowCreateGenreForm] = useState(false);
     const [showDeleteGenreForm, setShowDeleteGenreForm] = useState(false);
+    const [showUpdateGenreForm, setShowUpdateGenreForm] = useState(false);
 
-    // управление показом формы создания нового жанра
+    // управление показом форм с основными операциями над жанрами
     const handleCreateGenreForm = () => {
+        if (showModal === true) {
+            setShowModal(false);
+            setShowCreateGenreForm(false);
+            return;
+        }
         setShowCreateGenreForm(!showCreateGenreForm);
         setShowModal(!showModal);
     };
-
-    // управление показом формы удаления жанра
     const handleDeleteGenreForm = () => {
+        if (showModal) {
+            setShowModal(false);
+            setShowDeleteGenreForm(false);
+            return;
+        }
         setShowDeleteGenreForm(!showDeleteGenreForm);
         setShowModal(!showModal);
     };
+    const handleUpdateGenreForm = () => {
+        if (showModal) {
+            setShowModal(false);
+            setShowUpdateGenreForm(false);
+            return;
+        }
+        setShowUpdateGenreForm(!showUpdateGenreForm);
+        setShowModal(!showModal);
+    }
 
     if (genres && links) {
         return (
@@ -56,10 +76,22 @@ export default function Genres() {
                                         <td className="p-1">{genre.id}. </td>
                                         <td className="p-1">{genre.name}</td>
                                         <td className="p-1">
-                                            <PrimaryButton className="btn btn-info mr-2">Update</PrimaryButton>
+                                            <PrimaryButton
+                                                onClick={() => {
+                                                    handleUpdateGenreForm();
+                                                    setGenreForUpdate(genre);
+                                                    setShowCreateGenreForm(false);
+                                                    setShowDeleteGenreForm(false);
+                                                }}
+                                                className="btn btn-info mr-2"
+                                            >
+                                                Update
+                                            </PrimaryButton>
                                             <DangerButton action={() => {
                                                 handleDeleteGenreForm();
                                                 setGenreForDeletion(genre);
+                                                setShowCreateGenreForm(false);
+                                                setShowUpdateGenreForm(false);
                                             }}>
                                                 Delete
                                             </DangerButton>
@@ -90,6 +122,12 @@ export default function Genres() {
                                     setHidden={handleDeleteGenreForm}
                                     genreForDeletion={genreForDeletion}
                                 />
+                                <UpdateGenreForm
+                                    className="container flex flex-col w-max rounded-lg bg-white p-6 m-5 shadow-[0px_14px_34px_0px_rgba(0,0,0,0.08)] ring-1 ring-white/[0.05] dark:bg-gray-800 dark:ring-red-700"
+                                    hidden={showUpdateGenreForm}
+                                    setHidden={handleUpdateGenreForm}
+                                    genreForUpdate={genreForUpdate}
+                                />
                             </div>
                         </Transition>
                     }
@@ -99,7 +137,12 @@ export default function Genres() {
                             <PrimaryButton className="btn btn-outline-secondary">
                                 <a className="page-link" href={links.previous}>Previous page</a>
                             </PrimaryButton>}
-                        <PrimaryButton onClick={ () => handleCreateGenreForm() }>
+                        <PrimaryButton
+                            onClick={() => {
+                                handleCreateGenreForm();
+                                setShowDeleteGenreForm(false);
+                                setShowUpdateGenreForm(false);
+                            }}>
                             New genre
                         </PrimaryButton>
                         {links.next &&
