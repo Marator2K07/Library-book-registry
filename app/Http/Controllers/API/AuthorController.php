@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\AuthorUpdateRequest;
+use App\Http\Requests\Author\AuthorUpdateApiRequest;
 use App\Http\Traits\AuthorControllerTrait;
 use App\Models\Author;
 use Illuminate\Http\Request;
@@ -69,7 +69,7 @@ class AuthorController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(AuthorUpdateRequest $request, string $id)
+    public function update(AuthorUpdateApiRequest $request, string $id)
     {
         // прежде всего проверка на валидность
         if ($request->validator->fails()) {

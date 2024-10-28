@@ -1,16 +1,16 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Author;
 
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 
-class AuthorUpdateRequest extends FormRequest
+class AuthorCreateRequest extends FormRequest
 {
     public $validator = null;
 
     /**
-     * В случае ошибки валидации, мы сможем получить доступ к ошибкам
+     * В случае ошибки валидации, мы сможем получить доступ к ошибкам вручную
      */
     protected function failedValidation(Validator $validator)
     {
@@ -33,8 +33,10 @@ class AuthorUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'string|max:255|min:2',
-            'day_of_birth' => 'before:now|date_format:Y-m-d'
+            'name' => 'string|max:255|min:2|required',
+            'email' => 'required|string|email|max:255',
+            'password' => 'required|string|password|max:255',
+            'day_of_birth' => 'before:now|date_format:Y-m-d|required'
         ];
     }
 }
