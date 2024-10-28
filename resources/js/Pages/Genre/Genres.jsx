@@ -3,10 +3,10 @@ import PrimaryButton from '@/Components/PrimaryButton';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout'
 import { Head, usePage } from '@inertiajs/react'
 import React, { useState } from 'react'
-import CreateGenreForm from './Profile/Partials/Genre/CreateGenreForm';
+import CreateGenreForm from './Partials/CreateGenreForm';
 import { Transition } from '@headlessui/react';
-import DeleteGenreForm from './Profile/Partials/Genre/DeleteGenreForm';
-import UpdateGenreForm from './Profile/Partials/Genre/UpdateGenreForm';
+import DeleteGenreForm from './Partials/DeleteGenreForm';
+import UpdateGenreForm from './Partials/UpdateGenreForm';
 
 export default function Genres() {
     const { genres, links } = usePage().props;

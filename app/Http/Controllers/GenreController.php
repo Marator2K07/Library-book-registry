@@ -16,7 +16,7 @@ class GenreController extends Controller
     {
         $genres = Genre::paginate(constant('DEFAULT_PAGINATE_VALUE'));
 
-        return Inertia::render('Genres', [
+        return Inertia::render('Genre/Genres', [
             'genres' => $genres,
             'links' => [
                 'previous' => $genres->previousPageUrl(),
