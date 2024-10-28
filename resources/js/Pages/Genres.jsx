@@ -134,7 +134,10 @@ export default function Genres() {
 
                     <div className="container flex w-max gap-4 rounded-lg bg-white p-6 m-5 shadow-[0px_14px_34px_0px_rgba(0,0,0,0.08)] ring-1 ring-white/[0.05] dark:bg-gray-800 dark:ring-red-700">
                         {links.previous &&
-                            <PrimaryButton className="btn btn-outline-secondary">
+                            <PrimaryButton
+                                className="btn btn-outline-secondary"
+                                onClick={() => location = links.previous}
+                            >
                                 <a className="page-link" href={links.previous}>Previous page</a>
                             </PrimaryButton>}
                         <PrimaryButton
@@ -146,8 +149,11 @@ export default function Genres() {
                             New genre
                         </PrimaryButton>
                         {links.next &&
-                            <PrimaryButton className="btn btn-outline-secondary">
-                                <a className="page-link" href={links.next}>Next page</a>
+                            <PrimaryButton
+                                onClick={() => location = links.next}
+                                className="btn btn-outline-secondary"
+                            >
+                                Next page
                             </PrimaryButton>}
                     </div>
                 </div>
