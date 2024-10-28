@@ -24,6 +24,8 @@ Route::middleware(['auth', 'checkAdmin'])->group(function () {
         ->name('genres.index');
     Route::post('/genres', [GenreController::class, 'store'])
         ->name('genres.store');
+    Route::post('/genres/{id}', [GenreController::class, 'destroy'])
+        ->name('genres.destroy');
 });
 
 Route::middleware('auth')->group(function () {

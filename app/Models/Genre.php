@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class Genre extends Model
 {
@@ -36,5 +37,10 @@ class Genre extends Model
             'genre_id',
             'book_id'
         );
+    }
+
+    public function genreBookRelatedRow()
+    {
+        return DB::table('book_genre')->where('genre_id', $this->id);
     }
 }

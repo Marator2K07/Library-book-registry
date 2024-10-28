@@ -75,6 +75,11 @@ class GenreController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $genre = Genre::find($id);
+        // сначала удаляем связанную строку и потом саму сущность
+        $genre->genreBookRelatedRow()->delete();
+        $genre->delete();
+
+        return redirect()->route('genres.index');
     }
 }
