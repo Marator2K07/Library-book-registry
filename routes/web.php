@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthorController;
 use App\Http\Controllers\GenreController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
@@ -28,6 +29,11 @@ Route::middleware(['auth', 'checkAdmin'])->group(function () {
         ->name('genres.update');
     Route::delete('/genres/{genre}', [GenreController::class, 'destroy'])
         ->name('genres.destroy');
+});
+
+Route::middleware(['auth', 'checkAdmin'])->group(function () {
+    Route::get('/authors', [AuthorController::class, 'index'])
+        ->name('authors.index');
 });
 
 Route::middleware('auth')->group(function () {
