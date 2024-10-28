@@ -26,20 +26,14 @@ class GenreController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
     {
         // т.к. сущность простая, валидацию можно провести на месте
-        $request->validate(['name' => 'required|unique:genres,name|string|max:65']);
+        $request->validate(
+            ['name' => 'required|unique:genres,name|string|max:65']
+        );
 
         Genre::create(['name' => $request->name]);
 
@@ -47,25 +41,9 @@ class GenreController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Genre $genre)
     {
         //
     }
@@ -73,9 +51,8 @@ class GenreController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Genre $genre)
     {
-        $genre = Genre::find($id);
         // сначала удаляем связанную строку и потом саму сущность
         $genre->genreBookRelatedRow()->delete();
         $genre->delete();
