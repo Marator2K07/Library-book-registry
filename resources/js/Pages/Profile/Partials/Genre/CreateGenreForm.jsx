@@ -23,7 +23,7 @@ export default function CreateGenreForm({
         recentlySuccessful,
     } = useForm({ name: '' });
 
-    const createGenre = (e) => {
+    const handleCreate = (e) => {
         e.preventDefault();
 
         post(route('genres.store'), {
@@ -56,7 +56,7 @@ export default function CreateGenreForm({
                     </p>
                 </header>
 
-                <form onSubmit={createGenre} className="mt-6 space-y-6">
+                <form onSubmit={handleCreate} className="mt-6 space-y-6">
                     <div>
                         <InputLabel
                             htmlFor="name"

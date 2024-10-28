@@ -8,4 +8,4 @@ define('AUTHORS_GET_START_PATH', '/authors/get');
 define('AUTHORS_UPDATE_START_PATH', '/authors/update');
 define('GENRES_GET_START_PATH', '/genres/get');
 
-define('DEFAULT_PAGINATE_VALUE', 15);
+define('DEFAULT_PAGINATE_VALUE', 12);
