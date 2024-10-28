@@ -35,6 +35,12 @@ export default function AuthenticatedLayout({ header, children }) {
                                     roles.admin &&
                                     <div className="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                                         <NavLink
+                                            href={route('authors.index')}
+                                            active={route().current('authors.index')}
+                                        >
+                                            Authors
+                                        </NavLink>
+                                        <NavLink
                                             href={route('genres.index')}
                                             active={route().current('genres.index')}
                                         >
@@ -141,13 +147,21 @@ export default function AuthenticatedLayout({ header, children }) {
                 >
                     {
                         roles.admin &&
-                        <div>
+                        <div className="container">
                             <div className="space-y-1 pb-3 pt-2">
                                 <ResponsiveNavLink
                                     href={route('greetings')}
                                     active={route().current('greetings')}
                                 >
                                     Greetings
+                                </ResponsiveNavLink>
+                            </div>
+                            <div className="space-y-1 pb-3 pt-2">
+                                <ResponsiveNavLink
+                                    href={route('authors.index')}
+                                    active={route().current('authors.index')}
+                                >
+                                    Authors
                                 </ResponsiveNavLink>
                             </div>
                             <div className="space-y-1 pb-3 pt-2">

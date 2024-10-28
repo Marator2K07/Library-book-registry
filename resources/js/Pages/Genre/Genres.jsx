@@ -3,8 +3,9 @@ import PrimaryButton from '@/Components/PrimaryButton';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout'
 import { Head, usePage } from '@inertiajs/react'
 import React, { useState } from 'react'
-import CreateGenreForm from './Partials/CreateGenreForm';
 import { Transition } from '@headlessui/react';
+import SecondaryButton from '@/Components/SecondaryButton';
+import CreateGenreForm from './Partials/CreateGenreForm';
 import DeleteGenreForm from './Partials/DeleteGenreForm';
 import UpdateGenreForm from './Partials/UpdateGenreForm';
 
@@ -134,12 +135,12 @@ export default function Genres() {
 
                     <div className="container flex w-max gap-4 rounded-lg bg-white p-6 m-5 shadow-[0px_14px_34px_0px_rgba(0,0,0,0.08)] ring-1 ring-white/[0.05] dark:bg-gray-800 dark:ring-red-700">
                         {links.previous &&
-                            <PrimaryButton
+                            <SecondaryButton
                                 className="btn btn-outline-secondary"
-                                onClick={() => location = links.previous}
+                                action={() => location = links.previous}
                             >
                                 <a className="page-link" href={links.previous}>Previous page</a>
-                            </PrimaryButton>}
+                            </SecondaryButton>}
                         <PrimaryButton
                             onClick={() => {
                                 handleCreateGenreForm();
@@ -149,12 +150,12 @@ export default function Genres() {
                             New genre
                         </PrimaryButton>
                         {links.next &&
-                            <PrimaryButton
-                                onClick={() => location = links.next}
+                            <SecondaryButton
+                                action={() => location = links.next}
                                 className="btn btn-outline-secondary"
                             >
                                 Next page
-                            </PrimaryButton>}
+                            </SecondaryButton>}
                     </div>
                 </div>
             </AuthenticatedLayout>
