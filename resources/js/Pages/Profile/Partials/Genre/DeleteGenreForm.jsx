@@ -8,7 +8,7 @@ export default function DeleteGenreForm({
     className = '',
     hidden = false,
     setHidden = null,
-    idForDeletion = null }) {
+    genreForDeletion = null }) {
 
     const {
         post,
@@ -19,7 +19,7 @@ export default function DeleteGenreForm({
     const handleDelete = (e) => {
         e.preventDefault();
 
-        post(route('genres.destroy', {id: idForDeletion}), {
+        post(route('genres.destroy', {genre: genreForDeletion}), {
             preserveScroll: true,
             onSuccess: () => {
                 setTimeout(() => {
