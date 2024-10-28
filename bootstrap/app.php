@@ -19,6 +19,9 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->api([
             App\Http\Middleware\HandleAPIRequests::class,
         ]);
+        $middleware->alias([
+            'checkAdmin' => \App\Http\Middleware\CheckForAdminRequests::class,
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //

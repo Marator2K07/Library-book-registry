@@ -19,7 +19,7 @@ Route::get('/greetings', function () {
     return Inertia::render('Greetings');
 })->middleware(['auth', 'verified'])->name('greetings');
 
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth', 'checkAdmin'])->group(function () {
     Route::get('/genres', [GenreController::class, 'index'])
         ->name('genres.index');
     Route::post('/genres', [GenreController::class, 'store'])
