@@ -1,3 +1,4 @@
+import { DELAY_AFTER_SUCCESSFULLY_ACTION } from '@/app';
 import InputError from '@/Components/InputError';
 import InputLabel from '@/Components/InputLabel';
 import PrimaryButton from '@/Components/PrimaryButton';
@@ -28,7 +29,12 @@ export default function CreateGenreForm({
 
         post(route('genres.store'), {
             preserveScroll: true,
-            onSuccess: () => reset(),
+            onSuccess: () => {
+                reset();
+                setTimeout(() => {
+                    setHidden();
+                }, DELAY_AFTER_SUCCESSFULLY_ACTION);
+            },
             onError: (errors) => {
                 if (errors.name) {
                     reset('name');
