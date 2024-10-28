@@ -83,7 +83,7 @@ export default function Genres() {
                                                     setShowCreateGenreForm(false);
                                                     setShowDeleteGenreForm(false);
                                                 }}
-                                                className="btn btn-info mr-2"
+                                                className="btn btn-info mr-1"
                                             >
                                                 Update
                                             </PrimaryButton>
