@@ -31,7 +31,10 @@ export default function UpdateGenreForm({
     const handleUpdate = (e) => {
         e.preventDefault();
 
-        post(route('genres.update', {genre: genreForUpdate}), {
+        post(route('genres.update', {
+            genre: genreForUpdate,
+            page: new URLSearchParams(window.location.search).get("page")
+        }), {
             preserveScroll: true,
             onSuccess: () => {
                 reset();

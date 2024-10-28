@@ -16,7 +16,7 @@ class GenreController extends Controller
     {
         $genres = Genre::paginate(constant('DEFAULT_PAGINATE_VALUE'));
 
-        return Inertia::render('Genres',[
+        return Inertia::render('Genres', [
             'genres' => $genres,
             'links' => [
                 'previous' => $genres->previousPageUrl(),
@@ -37,7 +37,10 @@ class GenreController extends Controller
 
         Genre::create(['name' => $request->name]);
 
-        return redirect()->route('genres.index');
+        return redirect()->route(
+            'genres.index',
+            ['page' => $request->page]
+        );
     }
 
     /**
@@ -52,18 +55,24 @@ class GenreController extends Controller
         $genre->name = $request->name;
         $genre->save();
 
-        return redirect()->route('genres.index');
+        return redirect()->route(
+            'genres.index',
+            ['page' => $request->page]
+        );
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Genre $genre)
+    public function destroy(Request $request, Genre $genre)
     {
         // сначала удаляем связанную строку и потом саму сущность
         $genre->genreBookRelatedRow()->delete();
         $genre->delete();
 
-        return redirect()->route('genres.index');
+        return redirect()->route(
+            'genres.index',
+            ['page' => $request->page]
+        );
     }
 }

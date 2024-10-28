@@ -12,6 +12,7 @@ export default function CreateGenreForm({
     className = '',
     hidden = false,
     setHidden = null }) {
+
     const nameInput = useRef();
 
     const {
@@ -27,7 +28,9 @@ export default function CreateGenreForm({
     const handleCreate = (e) => {
         e.preventDefault();
 
-        post(route('genres.store'), {
+        post(route('genres.store', {
+            page: new URLSearchParams(window.location.search).get("page")
+        }), {
             preserveScroll: true,
             onSuccess: () => {
                 reset();
