@@ -23,6 +23,8 @@ Route::get('/greetings', function () {
 Route::middleware(['auth', 'checkAdmin'])->group(function () {
     Route::get('/genres', [GenreController::class, 'index'])
         ->name('genres.index');
+    Route::get('/genres/{id}', [GenreController::class, 'show'])
+        ->name('genres.show');
     Route::post('/genres', [GenreController::class, 'store'])
         ->name('genres.store');
     Route::post('/genres/{genre}', [GenreController::class, 'update'])

@@ -26,6 +26,18 @@ class GenreController extends Controller
     }
 
     /**
+     * Display the specified resource.
+     */
+    public function show(string $id)
+    {
+        $genre = Genre::find($id);
+
+        return Inertia::render('Genre/GenreDetails', [
+            'genre' => $genre
+        ]);
+    }
+
+    /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
@@ -56,8 +68,11 @@ class GenreController extends Controller
         $genre->save();
 
         return redirect()->route(
-            'genres.index',
-            ['page' => $request->page]
+            'genres.show',
+            [
+                'id' => $genre->id,
+                'page' => $request->page
+            ]
         );
     }
 
