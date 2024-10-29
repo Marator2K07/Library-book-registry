@@ -2,7 +2,6 @@ import InputError from '@/Components/InputError';
 import InputLabel from '@/Components/InputLabel';
 import NavLink from '@/Components/NavLink';
 import PrimaryButton from '@/Components/PrimaryButton';
-import SecondaryButton from '@/Components/SecondaryButton';
 import TextInput from '@/Components/TextInput';
 import { DELAY_AFTER_SUCCESSFULLY_ACTION } from '@/constants';
 import { Transition } from '@headlessui/react';
@@ -18,7 +17,7 @@ export default function UpdateAuthorForm({
     const nameInput = useRef();
     const emailInput = useRef();
     const currentPasswordInput = useRef();
-    const newPasswordInput = useRef();
+    const passwordInput = useRef();
     const birthdayInput = useRef();
 
     const {
@@ -33,7 +32,7 @@ export default function UpdateAuthorForm({
         name: authorForUpdate ? authorForUpdate.name : '',
         email: authorForUpdate ? authorForUpdate.user.email : '',
         current_password: '',
-        new_password: '',
+        password: '',
         day_of_birth: authorForUpdate ? authorForUpdate.day_of_birth : ''
     });
 
@@ -60,9 +59,9 @@ export default function UpdateAuthorForm({
                     reset('current_password');
                     currentPasswordInput.current.focus();
                 }
-                if (errors.new_password) {
+                if (errors.password) {
                     reset('password');
-                    newPasswordInput.current.focus();
+                    passwordInput.current.focus();
                 }
                 if (errors.day_of_birth) {
                     reset('day_of_birth');
@@ -137,7 +136,7 @@ export default function UpdateAuthorForm({
                     <div>
                         <InputLabel
                             htmlFor="current_password"
-                            value="Current password"
+                            value="Current password (!from admin account!)"
                         />
                         <TextInput
                             id="current_password"
@@ -148,7 +147,6 @@ export default function UpdateAuthorForm({
                                 setData('current_password', e.target.value)
                             }
                             className="block w-full"
-                            autoComplete="current-password"
                         />
                         <InputError
                             message={errors.current_password}
@@ -163,17 +161,16 @@ export default function UpdateAuthorForm({
                         />
                         <TextInput
                             id="password"
-                            ref={newPasswordInput}
-                            value={data.new_password}
+                            ref={passwordInput}
+                            value={data.password}
                             type="password"
                             onChange={(e) =>
-                                setData('current_password', e.target.value)
+                                setData('password', e.target.value)
                             }
                             className="block w-full"
-                            autoComplete="new-password"
                         />
                         <InputError
-                            message={errors.new_password}
+                            message={errors.password}
                             className="mt-1"
                         />
                     </div>
