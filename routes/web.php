@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthorController;
+use App\Http\Controllers\BookController;
 use App\Http\Controllers\GenreController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
@@ -44,6 +45,11 @@ Route::middleware(['auth', 'checkAdmin'])->group(function () {
         ->name('authors.update');
     Route::delete('/authors/{author}', [AuthorController::class, 'destroy'])
         ->name('authors.destroy');
+});
+
+Route::middleware(['auth', 'checkAdmin'])->group(function () {
+    Route::get('/books', [BookController::class, 'index'])
+        ->name('books.index');
 });
 
 Route::middleware('auth')->group(function () {
