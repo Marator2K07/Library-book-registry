@@ -18,7 +18,7 @@ class AuthorCreateRequest extends FormRequest
             'name' => 'string|max:255|min:5|required',
             'email' => 'required|string|email|max:255',
             'password' => ['required', Rules\Password::defaults()],
-            'day_of_birth' => 'before:now|date_format:Y-m-d|required'
+            'day_of_birth' => 'before:now|after:1970-01-01|date_format:Y-m-d|required'
         ];
     }
 }
