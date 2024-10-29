@@ -47,8 +47,6 @@ export default function GenreDetails() {
         )
     }
     else {
-        console.log(usePage().props.genre);
-
         return (
             <AuthenticatedLayout
                 header={

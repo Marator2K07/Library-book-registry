@@ -19,10 +19,7 @@ export default function DeleteGenreForm({
     const handleDelete = (e) => {
         e.preventDefault();
 
-        destroy(route('genres.destroy', {
-            genre: genreForDeletion,
-            page: new URLSearchParams(window.location.search).get("page")
-        }), {
+        destroy(route('genres.destroy', { genre: genreForDeletion }), {
             preserveScroll: true,
             onSuccess: () => {
                 setTimeout(() => {

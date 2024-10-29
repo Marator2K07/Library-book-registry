@@ -2,7 +2,6 @@ import InputError from '@/Components/InputError';
 import InputLabel from '@/Components/InputLabel';
 import NavLink from '@/Components/NavLink';
 import PrimaryButton from '@/Components/PrimaryButton';
-import SecondaryButton from '@/Components/SecondaryButton';
 import TextInput from '@/Components/TextInput';
 import { DELAY_AFTER_SUCCESSFULLY_ACTION } from '@/constants';
 import { Transition } from '@headlessui/react';
@@ -32,10 +31,7 @@ export default function UpdateGenreForm({
     const handleUpdate = (e) => {
         e.preventDefault();
 
-        post(route('genres.update', {
-            genre: genreForUpdate,
-            page: new URLSearchParams(window.location.search).get("page")
-        }), {
+        post(route('genres.update', { genre: genreForUpdate }), {
             preserveScroll: true,
             onSuccess: () => {
                 setTimeout(() => {
@@ -62,10 +58,10 @@ export default function UpdateGenreForm({
             <section className={className}>
                 <header>
                     <h2 className="text-lg font-medium text-gray-900 dark:text-gray-100">
-                        Update genre
+                        Genre with id: {genreForUpdate.id}
                     </h2>
                     <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">
-                        Change the current genre name.
+                        You can update field(s) for current entity.
                     </p>
                 </header>
 
