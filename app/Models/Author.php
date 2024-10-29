@@ -37,7 +37,7 @@ class Author extends Model
     protected function casts(): array
     {
         return [
-            'day_of_birth' => 'date'
+            'day_of_birth' => 'date:Y-m-d'
         ];
     }
 
