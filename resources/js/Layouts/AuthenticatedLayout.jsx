@@ -41,6 +41,12 @@ export default function AuthenticatedLayout({ header, children }) {
                                             Authors
                                         </NavLink>
                                         <NavLink
+                                            href={route('books.index')}
+                                            active={route().current('books.index')}
+                                        >
+                                            Books
+                                        </NavLink>
+                                        <NavLink
                                             href={route('genres.index')}
                                             active={route().current('genres.index')}
                                         >
@@ -162,6 +168,14 @@ export default function AuthenticatedLayout({ header, children }) {
                                     active={route().current('authors.index')}
                                 >
                                     Authors
+                                </ResponsiveNavLink>
+                            </div>
+                            <div className="space-y-1 pb-3 pt-2">
+                                <ResponsiveNavLink
+                                    href={route('books.index')}
+                                    active={route().current('books.index')}
+                                >
+                                    Books
                                 </ResponsiveNavLink>
                             </div>
                             <div className="space-y-1 pb-3 pt-2">
