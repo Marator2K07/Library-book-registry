@@ -40,6 +40,8 @@ Route::middleware(['auth', 'checkAdmin'])->group(function () {
         ->name('authors.show');
     Route::post('/authors', [AuthorController::class, 'store'])
         ->name('authors.store');
+    Route::post('/authors/{author}', [AuthorController::class, 'update'])
+        ->name('authors.update');
 });
 
 Route::middleware('auth')->group(function () {
