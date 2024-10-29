@@ -1,5 +1,6 @@
 import InputError from '@/Components/InputError';
 import InputLabel from '@/Components/InputLabel';
+import NavLink from '@/Components/NavLink';
 import PrimaryButton from '@/Components/PrimaryButton';
 import SecondaryButton from '@/Components/SecondaryButton';
 import TextInput from '@/Components/TextInput';
@@ -37,7 +38,6 @@ export default function UpdateGenreForm({
         }), {
             preserveScroll: true,
             onSuccess: () => {
-                reset();
                 setTimeout(() => {
                     setHidden();
                 }, DELAY_AFTER_SUCCESSFULLY_ACTION);
@@ -53,7 +53,7 @@ export default function UpdateGenreForm({
 
     return (
         <Transition
-            show={hidden}
+            show={!hidden}
             enter="transition ease-in-out"
             enterFrom="opacity-0"
             leave="transition ease-in-out"
@@ -93,7 +93,9 @@ export default function UpdateGenreForm({
                     <div className="flex flex-col items-center gap-4">
                         <div className="flex items-center gap-4">
                             <PrimaryButton disabled={processing}>Update</PrimaryButton>
-                            <SecondaryButton action={setHidden}>Back</SecondaryButton>
+                            <NavLink href={route('genres.index')}>
+                                Back
+                            </NavLink>
                         </div>
                         <Transition
                             show={recentlySuccessful}
