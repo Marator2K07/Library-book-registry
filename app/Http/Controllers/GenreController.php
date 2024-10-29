@@ -64,8 +64,7 @@ class GenreController extends Controller
             ['name' => 'required|unique:genres,name|string|max:65']
         );
 
-        $genre->name = $request->name;
-        $genre->save();
+        $genre->update($request->toArray());
 
         return redirect()->route(
             'genres.show',
