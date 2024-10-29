@@ -42,6 +42,8 @@ Route::middleware(['auth', 'checkAdmin'])->group(function () {
         ->name('authors.store');
     Route::post('/authors/{author}', [AuthorController::class, 'update'])
         ->name('authors.update');
+    Route::delete('/authors/{author}', [AuthorController::class, 'destroy'])
+        ->name('authors.destroy');
 });
 
 Route::middleware('auth')->group(function () {

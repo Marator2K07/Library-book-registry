@@ -7,6 +7,7 @@ use App\Http\Requests\Author\AuthorCreateRequest;
 use App\Http\Requests\Author\AuthorUpdateRequest;
 use App\Models\Author;
 use App\Models\User;
+use App\Services\LogService;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -70,14 +71,6 @@ class AuthorController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      */
     public function update(AuthorUpdateRequest $request, Author $author)
@@ -102,8 +95,22 @@ class AuthorController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
-    {
-        //
+    public function destroy(
+        LogService $log,
+        Request $request,
+        Author $author
+    ) {
+        // (+лог для удаленных вместе с автором книг)
+        $books = $author->books;
+        foreach ($books as $book) {
+            $log->info('Удаление книги', ['book' => $book]);
+        }
+        // каскадно вместе аккаунтом удаляем автора и его книги (и связь жанров)
+        $author->user()->delete();
+
+        return redirect()->route(
+            'authors.index',
+            ['page' => $request->page]
+        );
     }
 }
