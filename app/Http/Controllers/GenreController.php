@@ -80,8 +80,7 @@ class GenreController extends Controller
      */
     public function destroy(Request $request, Genre $genre)
     {
-        // сначала удаляем связанную строку и потом саму сущность
-        $genre->genreBookRelatedRow()->delete();
+        // каскадное удаление жанра вместе со связью с книгами
         $genre->delete();
 
         return redirect()->route(
