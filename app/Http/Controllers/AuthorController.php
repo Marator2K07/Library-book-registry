@@ -31,6 +31,18 @@ class AuthorController extends Controller
     }
 
     /**
+     * Display the specified resource.
+     */
+    public function show(string $id)
+    {
+        $author = Author::with('user')->find($id);
+
+        return Inertia::render('Author/AuthorDetails', [
+            'author' => $author
+        ]);
+    }
+
+    /**
      * Store a newly created resource in storage.
      */
     public function store(AuthorCreateRequest $request)
@@ -54,14 +66,6 @@ class AuthorController extends Controller
             'authors.store',
             ['page' => $request->page]
         );
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
     }
 
     /**

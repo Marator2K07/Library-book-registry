@@ -36,6 +36,8 @@ Route::middleware(['auth', 'checkAdmin'])->group(function () {
 Route::middleware(['auth', 'checkAdmin'])->group(function () {
     Route::get('/authors', [AuthorController::class, 'index'])
         ->name('authors.index');
+    Route::get('/authors/{id}', [AuthorController::class, 'show'])
+        ->name('authors.show');
     Route::post('/authors', [AuthorController::class, 'store'])
         ->name('authors.store');
 });
