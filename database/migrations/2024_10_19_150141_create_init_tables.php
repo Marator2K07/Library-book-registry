@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('authors', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->unique()->constrained();
+            $table->foreignId('user_id')->unique()->constrained()->cascadeOnDelete();
             $table->string('name');
             $table->timestamp('day_of_birth')->nullable();
             $table->timestamps();
@@ -21,13 +21,11 @@ return new class extends Migration
 
         Schema::create('books', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('author_id')->unsigned();
+            $table->foreignId('author_id')->constrained()->cascadeOnDelete();
             $table->string('title');
             $table->integer('publication_type');
             $table->timestamp('day_of_publication');
             $table->timestamps();
-
-            $table->foreign('author_id')->references('id')->on('authors');
         });
 
         Schema::create('genres', function (Blueprint $table) {
@@ -41,8 +39,8 @@ return new class extends Migration
             $table->bigInteger('book_id')->unsigned();
             $table->bigInteger('genre_id')->unsigned();
 
-            $table->foreign('genre_id')->references('id')->on('genres');
-            $table->foreign('book_id')->references('id')->on('books');
+            $table->foreign('genre_id')->references('id')->on('genres')->onDelete('cascade');
+            $table->foreign('book_id')->references('id')->on('books')->onDelete('cascade');
         });
     }
 
