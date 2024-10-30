@@ -43,10 +43,11 @@ export default function Books() {
                             >
                                 Previous page
                             </SecondaryButton>}
-                        <PrimaryButton
-                            onClick={() => { handleCreateBookForm() }}
-                        >
+                        <PrimaryButton onClick={() => { handleCreateBookForm() }}>
                             New book
+                        </PrimaryButton>
+                        <PrimaryButton onClick={() => { handleSearchFilterBooksForm() }}>
+                            Search/filter
                         </PrimaryButton>
                         {links.next &&
                             <SecondaryButton
@@ -57,10 +58,13 @@ export default function Books() {
                             </SecondaryButton>}
                     </div>
 
-                    <SearchFilterBooksForm
-                        className="w-auto rounded-lg bg-white p-4 mt-4 shadow-[0px_14px_34px_0px_rgba(0,0,0,0.08)] ring-1 ring-white/[0.05] dark:bg-gray-800 dark:ring-red-700"
-                        shown={showSearchFilterBooksForm}
-                    />
+                    <div className="absolute left-50 dark:bg-gray-700 rounded-lg">
+                        <SearchFilterBooksForm
+                            className="w-auto rounded-lg bg-white p-4 m-6 shadow-[0px_14px_34px_0px_rgba(0,0,0,0.08)] ring-1 ring-white/[0.05] dark:bg-gray-800 dark:ring-red-700"
+                            shown={showSearchFilterBooksForm}
+                            setHidden={handleSearchFilterBooksForm}
+                        />
+                    </div>
 
                     <div className="container flex w-auto rounded-lg bg-white p-4 m-5 shadow-[0px_14px_34px_0px_rgba(0,0,0,0.08)] ring-1 ring-white/[0.05] dark:bg-gray-800 dark:ring-red-700">
                         <table className="table text-white">
