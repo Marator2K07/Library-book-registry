@@ -9,15 +9,9 @@ import TruncatedText from '@/Components/TruncatedText';
 import { MAX_BOOK_AUTHOR_LENGTH_RATIO, MAX_BOOK_TITLE_LENGTH_RATIO } from '@/constants';
 import { publicationTypeToString } from '@/utils';
 import EntityList from '@/Components/EntityList';
+import SearchFilterBooksForm from './Partials/SearchFilterBooksForm';
 
 export default function Books() {
-    // вручную определяем нужный формат даты
-    const formattedDate = new Intl.DateTimeFormat('en-EN', {
-        day: '2-digit',
-        month: '2-digit',
-        year: 'numeric'
-    });
-
     const { books, links } = usePage().props;
     const [showCreateBookForm, setShowCreateBookForm] = useState(false);
 
@@ -26,8 +20,6 @@ export default function Books() {
     };
 
     if (books && links) {
-        console.log(books);
-
         return (
             <AuthenticatedLayout
                 header={
@@ -39,12 +31,38 @@ export default function Books() {
                 <Head title="Book books" />
 
                 <div className="flex flex-col items-center justify-center">
+                    <div className="container flex w-max gap-4 rounded-lg bg-white p-6 mt-4 shadow-[0px_14px_34px_0px_rgba(0,0,0,0.08)] ring-1 ring-white/[0.05] dark:bg-gray-800 dark:ring-red-700">
+                        {links.previous &&
+                            <SecondaryButton
+                                className="btn btn-outline-secondary"
+                                action={() => location = links.previous}
+                            >
+                                Previous page
+                            </SecondaryButton>}
+                        <PrimaryButton
+                            onClick={() => { handleCreateBookForm() }}
+                        >
+                            New book
+                        </PrimaryButton>
+                        {links.next &&
+                            <SecondaryButton
+                                action={() => location = links.next}
+                                className="btn btn-outline-secondary"
+                            >
+                                Next page
+                            </SecondaryButton>}
+                    </div>
+
+                    <SearchFilterBooksForm
+                        className="w-auto rounded-lg bg-white p-4 mt-4 shadow-[0px_14px_34px_0px_rgba(0,0,0,0.08)] ring-1 ring-white/[0.05] dark:bg-gray-800 dark:ring-red-700"
+                    />
+
                     <div className="container flex w-auto rounded-lg bg-white p-4 m-5 shadow-[0px_14px_34px_0px_rgba(0,0,0,0.08)] ring-1 ring-white/[0.05] dark:bg-gray-800 dark:ring-red-700">
                         <table className="table text-white">
                             <thead>
                                 <tr>
                                     <th>Id</th>
-                                    <th>Name</th>
+                                    <th>Title</th>
                                     <th>Type</th>
                                     <th>Published</th>
                                     <th>Added</th>
@@ -73,7 +91,7 @@ export default function Books() {
                                         <td className="p-1">{book.created_at}</td>
                                         <td className="p-1">
                                             <TruncatedText
-                                                text={book.author.name}
+                                                text={book ? book.author.name : ''}
                                                 length={MAX_BOOK_AUTHOR_LENGTH_RATIO}
                                             />
                                         </td>
@@ -91,7 +109,6 @@ export default function Books() {
                             </tbody>
                         </table>
                     </div>
-
                     {
                         <div className="absolute left-50 dark:bg-gray-700 rounded-lg">
                             {/* <CreateBookForm
@@ -101,28 +118,6 @@ export default function Books() {
                             /> */}
                         </div>
                     }
-
-                    <div className="container flex w-max gap-4 rounded-lg bg-white p-6 m-5 shadow-[0px_14px_34px_0px_rgba(0,0,0,0.08)] ring-1 ring-white/[0.05] dark:bg-gray-800 dark:ring-red-700">
-                        {links.previous &&
-                            <SecondaryButton
-                                className="btn btn-outline-secondary"
-                                action={() => location = links.previous}
-                            >
-                                Previous page
-                            </SecondaryButton>}
-                        <PrimaryButton
-                            onClick={() => { handleCreateBookForm() }}
-                        >
-                            New book
-                        </PrimaryButton>
-                        {links.next &&
-                            <SecondaryButton
-                                action={() => location = links.next}
-                                className="btn btn-outline-secondary"
-                            >
-                                Next page
-                            </SecondaryButton>}
-                    </div>
                 </div>
             </AuthenticatedLayout>
         )

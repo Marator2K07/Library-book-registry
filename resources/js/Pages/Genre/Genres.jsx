@@ -26,6 +26,27 @@ export default function Genres() {
                 <Head title="Book genres" />
 
                 <div className="flex flex-col items-center justify-center">
+                    <div className="container flex w-max gap-4 rounded-lg bg-white p-6 mt-4 shadow-[0px_14px_34px_0px_rgba(0,0,0,0.08)] ring-1 ring-white/[0.05] dark:bg-gray-800 dark:ring-red-700">
+                        {links.previous &&
+                            <SecondaryButton
+                                className="btn btn-outline-secondary"
+                                action={() => location = links.previous}
+                            >
+                                Previous page
+                            </SecondaryButton>}
+                        <PrimaryButton
+                            onClick={() => { handleCreateGenreForm() }}
+                        >
+                            New genre
+                        </PrimaryButton>
+                        {links.next &&
+                            <SecondaryButton
+                                action={() => location = links.next}
+                                className="btn btn-outline-secondary"
+                            >
+                                Next page
+                            </SecondaryButton>}
+                    </div>
                     <div className="container flex w-max rounded-lg bg-white p-6 m-5 shadow-[0px_14px_34px_0px_rgba(0,0,0,0.08)] ring-1 ring-white/[0.05] dark:bg-gray-800 dark:ring-red-700">
                         <table className="table text-white">
                             <thead>
@@ -63,28 +84,6 @@ export default function Genres() {
                             />
                         </div>
                     }
-
-                    <div className="container flex w-max gap-4 rounded-lg bg-white p-6 m-5 shadow-[0px_14px_34px_0px_rgba(0,0,0,0.08)] ring-1 ring-white/[0.05] dark:bg-gray-800 dark:ring-red-700">
-                        {links.previous &&
-                            <SecondaryButton
-                                className="btn btn-outline-secondary"
-                                action={() => location = links.previous}
-                            >
-                                Previous page
-                            </SecondaryButton>}
-                        <PrimaryButton
-                            onClick={() => { handleCreateGenreForm() }}
-                        >
-                            New genre
-                        </PrimaryButton>
-                        {links.next &&
-                            <SecondaryButton
-                                action={() => location = links.next}
-                                className="btn btn-outline-secondary"
-                            >
-                                Next page
-                            </SecondaryButton>}
-                    </div>
                 </div>
             </AuthenticatedLayout>
         )
