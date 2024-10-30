@@ -6,7 +6,7 @@ import { useForm } from '@inertiajs/react';
 
 export default function DeleteAuthorForm({
     className = '',
-    hidden = false,
+    shown = true,
     setHidden = null,
     authorForDeletion = null }) {
 
@@ -31,7 +31,7 @@ export default function DeleteAuthorForm({
 
     return (
         <Transition
-            show={hidden}
+            show={shown}
             enter="transition ease-in-out"
             enterFrom="opacity-0"
             leave="transition ease-in-out"

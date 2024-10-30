@@ -10,7 +10,7 @@ import { useRef } from 'react';
 
 export default function UpdateGenreForm({
     className = '',
-    hidden = false,
+    shown = true,
     setHidden = null,
     genreForUpdate = null }) {
 
@@ -49,7 +49,7 @@ export default function UpdateGenreForm({
 
     return (
         <Transition
-            show={!hidden}
+            show={shown}
             enter="transition ease-in-out"
             enterFrom="opacity-0"
             leave="transition ease-in-out"

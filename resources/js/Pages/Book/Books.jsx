@@ -14,10 +14,14 @@ import SearchFilterBooksForm from './Partials/SearchFilterBooksForm';
 export default function Books() {
     const { books, links } = usePage().props;
     const [showCreateBookForm, setShowCreateBookForm] = useState(false);
+    const [showSearchFilterBooksForm, setShowSearchFilterBooksForm] = useState(false);
 
     const handleCreateBookForm = () => {
         setShowCreateBookForm(!showCreateBookForm);
     };
+    const handleSearchFilterBooksForm = () => {
+        setShowSearchFilterBooksForm(!showSearchFilterBooksForm);
+    }
 
     if (books && links) {
         return (
@@ -55,6 +59,7 @@ export default function Books() {
 
                     <SearchFilterBooksForm
                         className="w-auto rounded-lg bg-white p-4 mt-4 shadow-[0px_14px_34px_0px_rgba(0,0,0,0.08)] ring-1 ring-white/[0.05] dark:bg-gray-800 dark:ring-red-700"
+                        shown={showSearchFilterBooksForm}
                     />
 
                     <div className="container flex w-auto rounded-lg bg-white p-4 m-5 shadow-[0px_14px_34px_0px_rgba(0,0,0,0.08)] ring-1 ring-white/[0.05] dark:bg-gray-800 dark:ring-red-700">
@@ -113,7 +118,7 @@ export default function Books() {
                         <div className="absolute left-50 dark:bg-gray-700 rounded-lg">
                             {/* <CreateBookForm
                                 className="container flex flex-col w-max rounded-lg bg-white p-6 m-5 shadow-[0px_14px_34px_0px_rgba(0,0,0,0.08)] ring-1 ring-white/[0.05] dark:bg-gray-800 dark:ring-red-700"
-                                hidden={showCreateBookForm}
+                                shown={showCreateBookForm}
                                 setHidden={handleCreateBookForm}
                             /> */}
                         </div>

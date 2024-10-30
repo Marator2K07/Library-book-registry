@@ -36,7 +36,7 @@ export default function GenreDetails() {
                         <div className="absolute left-50 dark:bg-gray-700 rounded-lg">
                             <DeleteGenreForm
                                 className="container flex flex-col w-max rounded-lg bg-white p-6 m-5 shadow-[0px_14px_34px_0px_rgba(0,0,0,0.08)] ring-1 ring-white/[0.05] dark:bg-gray-800 dark:ring-red-700"
-                                hidden={showDeleteGenreForm}
+                                shown={showDeleteGenreForm}
                                 setHidden={handleDeleteGenreForm}
                                 genreForDeletion={genre}
                             />

@@ -10,7 +10,7 @@ import { useRef } from 'react';
 
 export default function UpdateAuthorForm({
     className = '',
-    hidden = false,
+    shown = true,
     setHidden = null,
     authorForUpdate = null }) {
 
@@ -73,7 +73,7 @@ export default function UpdateAuthorForm({
 
     return (
         <Transition
-            show={!hidden}
+            show={shown}
             enter="transition ease-in-out"
             enterFrom="opacity-0"
             leave="transition ease-in-out"

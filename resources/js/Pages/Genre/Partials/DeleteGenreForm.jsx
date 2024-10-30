@@ -6,7 +6,7 @@ import { useForm } from '@inertiajs/react';
 
 export default function DeleteGenreForm({
     className = '',
-    hidden = false,
+    shown = true,
     setHidden = null,
     genreForDeletion = null }) {
 
@@ -31,7 +31,7 @@ export default function DeleteGenreForm({
 
     return (
         <Transition
-            show={hidden}
+            show={shown}
             enter="transition ease-in-out"
             enterFrom="opacity-0"
             leave="transition ease-in-out"

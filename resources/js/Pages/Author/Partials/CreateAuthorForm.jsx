@@ -10,7 +10,7 @@ import { useRef } from 'react';
 
 export default function CreateAuthorForm({
     className = '',
-    hidden = false,
+    shown = true,
     setHidden = null }) {
 
     const nameInput = useRef();
@@ -69,7 +69,7 @@ export default function CreateAuthorForm({
 
     return (
         <Transition
-            show={hidden}
+            show={shown}
             enter="transition ease-in-out"
             enterFrom="opacity-0"
             leave="transition ease-in-out"

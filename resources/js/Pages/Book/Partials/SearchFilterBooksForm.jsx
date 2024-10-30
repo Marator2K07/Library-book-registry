@@ -1,4 +1,3 @@
-import InputError from '@/Components/InputError';
 import InputLabel from '@/Components/InputLabel';
 import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
@@ -8,7 +7,7 @@ import { useRef } from 'react';
 
 export default function SearchFilterBooksForm({
     className = '',
-    hidden = false,
+    shown = true,
     setHidden = null }) {
     const bookNameInput = useRef();
 
@@ -32,7 +31,7 @@ export default function SearchFilterBooksForm({
 
     return (
         <Transition
-            show={!hidden}
+            show={shown}
             enter="transition ease-in-out"
             enterFrom="opacity-0"
             leave="transition ease-in-out"
