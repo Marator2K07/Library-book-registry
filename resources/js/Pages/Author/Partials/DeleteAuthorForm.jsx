@@ -45,6 +45,9 @@ export default function DeleteAuthorForm({
                     <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">
                         Are you sure you want to delete selected author?
                     </p>
+                    <p className="mt-1 text-sm text-gray-600 dark:text-yellow-400">
+                    !All of the author's books will be deleted along with him!
+                    </p>
                 </header>
 
                 <form onSubmit={handleDelete} className="mt-6 space-y-6">

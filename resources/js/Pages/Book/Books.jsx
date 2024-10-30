@@ -39,7 +39,7 @@ export default function Books() {
                 <Head title="Book books" />
 
                 <div className="flex flex-col items-center justify-center">
-                    <div className="container flex w-max rounded-lg bg-white p-6 m-5 shadow-[0px_14px_34px_0px_rgba(0,0,0,0.08)] ring-1 ring-white/[0.05] dark:bg-gray-800 dark:ring-red-700">
+                    <div className="container flex w-auto rounded-lg bg-white p-4 m-5 shadow-[0px_14px_34px_0px_rgba(0,0,0,0.08)] ring-1 ring-white/[0.05] dark:bg-gray-800 dark:ring-red-700">
                         <table className="table text-white">
                             <thead>
                                 <tr>

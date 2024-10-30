@@ -17,8 +17,7 @@ class Book extends Model
     protected $hidden = [
         'pivot',
         'author_id',
-        'created_at',
-        'updated_at'
+        'updated_at',
     ];
 
     /**
@@ -30,6 +29,7 @@ class Book extends Model
         'title',
         'publication_type',
         'day_of_publication',
+        'created_at',
     ];
 
     /**
@@ -38,7 +38,8 @@ class Book extends Model
     protected function casts(): array
     {
         return [
-            'day_of_publication' => 'date:Y-m-d'
+            'day_of_publication' => 'date:d.m.Y',
+            'created_at' => 'date:d.m.Y'
         ];
     }
 

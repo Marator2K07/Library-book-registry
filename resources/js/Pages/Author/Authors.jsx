@@ -1,9 +1,7 @@
-import DangerButton from '@/Components/DangerButton';
 import PrimaryButton from '@/Components/PrimaryButton';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout'
 import { Head, usePage } from '@inertiajs/react'
 import React, { useState } from 'react'
-import { Transition } from '@headlessui/react';
 import SecondaryButton from '@/Components/SecondaryButton';
 import CreateAuthorForm from './Partials/CreateAuthorForm';
 import NavLink from '@/Components/NavLink';
