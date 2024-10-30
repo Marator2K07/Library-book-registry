@@ -32,15 +32,18 @@ class BookController extends Controller
     public function search(Request $request)
     {
         $title = $request->title;
+        $sort = $request->sort;
+
         $books = Book::where('title', 'like', '%' . $title . '%')
             ->with('author', 'genres')
+            ->orderBy('title', $sort)
             ->paginate(constant('DEFAULT_PAGINATE_VALUE'));
         // корректная обработка пагинации с учетом входящих параметров
         $prevPageLink = $books->previousPageUrl()
-            ? $books->previousPageUrl() . '&title=' . $title
+            ? $books->previousPageUrl() . '&title=' . $title . '&sort=' . $sort
             : null;
         $nextPageLink = $books->nextPageUrl()
-            ? $books->nextPageUrl() . '&title=' . $title
+            ? $books->nextPageUrl() . '&title=' . $title . '&sort=' . $sort
             : null;
 
         return Inertia::render('Book/Books', [
