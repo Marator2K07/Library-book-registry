@@ -15,12 +15,11 @@ export default function SearchFilterBooksForm({
     const {
         data,
         setData,
-        errors,
         get,
         processing,
-        recentlySuccessful,
     } = useForm({
-        title: ''
+        title: '',
+        sort: 'asc'
     });
 
     const handleSearch = (e) => {
@@ -51,10 +50,41 @@ export default function SearchFilterBooksForm({
 
                 <form onSubmit={handleSearch} className="mt-2 space-y-6">
                     <div>
-                        <InputLabel
-                            htmlFor="title"
-                            value="Title"
-                        />
+                        <div className="flex gap-4 items-center justify-start">
+                            <InputLabel
+                                htmlFor="title"
+                                value="Title"
+                            />
+                            <div className="text-xs font-semibold leading-tight text-gray-800 dark:text-gray-200">
+                                (Sorting:
+                                <label htmlFor="sort-title-asc">
+                                    <input
+                                        type="radio"
+                                        id="sort-title-asc"
+                                        name="sortBy"
+                                        value="asc"
+                                        style={{color: 'red'}}
+                                        onClick={() => setData('sort', 'asc')}
+                                        checked={data.sort === 'asc'}
+                                    />
+                                    Direct(A-Z)
+                                </label>
+                                <label htmlFor="sort-title-desc">
+                                    <input
+                                        type="radio"
+                                        id="sort-title-desc"
+                                        name="sortBy"
+                                        value="desc"
+                                        style={{color: 'red'}}
+                                        onClick={() => setData('sort', 'desc')}
+                                        checked={data.sort === 'desc'}
+                                    />
+                                    Reverse(Z-A)
+                                </label>
+                                 )
+                            </div>
+                        </div>
+
                         <div className="flex gap-4 items-center justify-center">
                             <TextInput
                                 id="title"
@@ -65,25 +95,10 @@ export default function SearchFilterBooksForm({
                                 }}
                                 className="mt-1 block w-full"
                             />
-                            <InputError
-                                message={errors.title}
-                                className="mt-2"
-                            />
                             <div className="flex flex-col items-center gap-4">
                                 <div className="flex items-center gap-4">
                                     <PrimaryButton disabled={processing}>Search</PrimaryButton>
                                 </div>
-                                <Transition
-                                    show={recentlySuccessful}
-                                    enter="transition ease-in-out"
-                                    enterFrom="opacity-0"
-                                    leave="transition ease-in-out"
-                                    leaveTo="opacity-0"
-                                >
-                                    <p className="text-sm text-gray-600 dark:text-gray-400">
-                                        List succesfully updated
-                                    </p>
-                                </Transition>
                             </div>
                         </div>
                     </div>
