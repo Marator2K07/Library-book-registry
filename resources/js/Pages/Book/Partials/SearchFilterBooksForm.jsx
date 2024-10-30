@@ -1,15 +1,31 @@
+import Checkbox from '@/Components/Checkbox';
+import EntitySelector from '@/Components/EntitySelector';
 import InputLabel from '@/Components/InputLabel';
 import PrimaryButton from '@/Components/PrimaryButton';
+import SecondaryButton from '@/Components/SecondaryButton';
 import TextInput from '@/Components/TextInput';
 import { Transition } from '@headlessui/react';
 import { useForm } from '@inertiajs/react';
-import { useRef } from 'react';
+import axios from 'axios';
+import { useEffect, useRef, useState } from 'react';
 
 export default function SearchFilterBooksForm({
     className = '',
     shown = true,
-    setHidden = null }) {
+    setHidden = null
+}) {
+
     const bookNameInput = useRef();
+    const [authors, setAuthors] = useState([]);
+    const [selectedAuthor, setSelectedAuthor] = useState(null);
+
+    useEffect(() => {
+        const loadAuthors = async () => {
+            setAuthors((await axios.get('/api/authors/get')).data);
+        }
+
+        loadAuthors();
+    }, []);
 
     const {
         data,
@@ -18,8 +34,19 @@ export default function SearchFilterBooksForm({
         processing,
     } = useForm({
         title: '',
-        sort: 'asc'
+        sort: 'asc',
+        author_filter: false,
+        author: selectedAuthor
     });
+
+    // функция обратного вызова для выбора автора-фильтра
+    const handleAuthorSelect = (author) => {
+        console.log(data);
+        if (data.author.id === author.id) {
+            setData('author', author.id);
+        }
+        setSelectedAuthor(author);
+    }
 
     const handleSearch = (e) => {
         e.preventDefault();
@@ -47,7 +74,7 @@ export default function SearchFilterBooksForm({
                     </p>
                 </header>
 
-                <form onSubmit={handleSearch} className="mt-2 space-y-6">
+                <form onSubmit={handleSearch} className="mt-4 space-y-6">
                     <div>
                         <div className="flex gap-4 items-center justify-start">
                             <InputLabel
@@ -62,9 +89,9 @@ export default function SearchFilterBooksForm({
                                         id="sort-title-asc"
                                         name="sortBy"
                                         value="asc"
-                                        style={{color: 'red'}}
+                                        style={{ color: 'red' }}
                                         onClick={() => setData('sort', 'asc')}
-                                        checked={data.sort === 'asc'}
+                                        defaultChecked={data.sort === 'asc'}
                                     />
                                     Direct(A-Z)
                                 </label>
@@ -74,13 +101,13 @@ export default function SearchFilterBooksForm({
                                         id="sort-title-desc"
                                         name="sortBy"
                                         value="desc"
-                                        style={{color: 'red'}}
+                                        style={{ color: 'red' }}
                                         onClick={() => setData('sort', 'desc')}
-                                        checked={data.sort === 'desc'}
+                                        defaultChecked={data.sort === 'desc'}
                                     />
                                     Reverse(Z-A)
                                 </label>
-                                 )
+                                )
                             </div>
                         </div>
 
@@ -94,14 +121,26 @@ export default function SearchFilterBooksForm({
                                 }}
                                 className="mt-1 block w-full"
                             />
-                            <div className="flex flex-col items-center gap-4">
-                                <div className="flex items-center gap-4">
-                                    <PrimaryButton disabled={processing}>Search</PrimaryButton>
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </form>
+                <div className="flex gap-2 mt-3 items-center justify-start">
+                    <Checkbox
+                        checked={data.author_filter}
+                        onChange={(e) => setData('author_filter', e.target.checked)}
+                    />
+                    <InputLabel value="Author filter: " />
+                    <div className="text-xs font-semibold leading-tight text-gray-800 dark:text-gray-200">
+                        <EntitySelector entities={authors} onSelect={handleAuthorSelect}/>
+                    </div>
+                </div>
+
+                <div className="flex flex-col items-center gap-4 mt-3">
+                    <div className="flex items-center gap-4">
+                        <PrimaryButton disabled={processing}>Search</PrimaryButton>
+                        <SecondaryButton action={setHidden}>Back</SecondaryButton>
+                    </div>
+                </div>
             </section>
         </Transition>
     );

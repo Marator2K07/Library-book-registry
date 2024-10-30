@@ -1,7 +1,7 @@
 import PrimaryButton from '@/Components/PrimaryButton';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout'
 import { Head, usePage } from '@inertiajs/react'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import SecondaryButton from '@/Components/SecondaryButton';
 // import CreateBookForm from './Partials/CreateBookForm';
 import NavLink from '@/Components/NavLink';
@@ -36,26 +36,30 @@ export default function Books() {
 
                 <div className="flex flex-col items-center justify-center">
                     <div className="container flex w-max gap-4 rounded-lg bg-white p-6 mt-4 shadow-[0px_14px_34px_0px_rgba(0,0,0,0.08)] ring-1 ring-white/[0.05] dark:bg-gray-800 dark:ring-red-700">
-                        {links.previous &&
+                        {
+                            links.previous &&
                             <SecondaryButton
                                 className="btn btn-outline-secondary"
                                 action={() => location = links.previous}
                             >
                                 Previous page
-                            </SecondaryButton>}
+                            </SecondaryButton>
+                        }
                         <PrimaryButton onClick={() => { handleCreateBookForm() }}>
                             New book
                         </PrimaryButton>
                         <PrimaryButton onClick={() => { handleSearchFilterBooksForm() }}>
                             Search/filter
                         </PrimaryButton>
-                        {links.next &&
+                        {
+                            links.next &&
                             <SecondaryButton
                                 action={() => location = links.next}
                                 className="btn btn-outline-secondary"
                             >
                                 Next page
-                            </SecondaryButton>}
+                            </SecondaryButton>
+                        }
                     </div>
 
                     <div className="absolute left-50 dark:bg-gray-700 rounded-lg">
