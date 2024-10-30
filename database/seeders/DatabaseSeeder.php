@@ -51,5 +51,14 @@ class DatabaseSeeder extends Seeder
         foreach ($books as $book) {
             $book->genres()->attach($genres->random()->id);
         }
+        // ставим жанры еще раз уже полностью случайно
+        for ($i = 0; $i < 1111; $i++) {
+            $book = $books->random();
+            $genre = $genres->random();
+            // Проверяем, есть ли уже этот жанр у книги
+            if (!$book->genres->contains($genre->id)) {
+                $book->genres()->attach($genre->id); // Добавляем жанр, если его нет
+            }
+        }
     }
 }
