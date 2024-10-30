@@ -27,6 +27,32 @@ class BookController extends Controller
     }
 
     /**
+     * Display a listing of the resource.
+     */
+    public function search(Request $request)
+    {
+        $title = $request->title;
+        $books = Book::where('title', 'like', '%' . $title . '%')
+            ->with('author', 'genres')
+            ->paginate(constant('DEFAULT_PAGINATE_VALUE'));
+        // корректная обработка пагинации с учетом входящих параметров
+        $prevPageLink = $books->previousPageUrl()
+            ? $books->previousPageUrl() . '&title=' . $title
+            : null;
+        $nextPageLink = $books->nextPageUrl()
+            ? $books->nextPageUrl() . '&title=' . $title
+            : null;
+
+        return Inertia::render('Book/Books', [
+            'books' => $books,
+            'links' => [
+                'previous' => $prevPageLink,
+                'next' => $nextPageLink
+            ]
+        ]);
+    }
+
+    /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
