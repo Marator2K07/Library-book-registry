@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 
 export default function EntityList({
     className = 'flex',
-    entities = [],
+    entities = null,
     emptyLabel = '...'
 }) {
     const [currentIndex, setCurrentIndex] = useState(0);
@@ -19,7 +19,7 @@ export default function EntityList({
         }
     }
 
-    if (entities) {
+    if (entities && entities.length > 0) {
         return (
             <div className={className}>
                 <div>
