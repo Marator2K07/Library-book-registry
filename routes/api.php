@@ -26,6 +26,10 @@ Route::middleware('api')->group(function () {
     );
     // для авторов
     Route::get(
+        constant('AUTHORS_GET_START_PATH'),
+        [AuthorController::class, 'index']
+    );
+    Route::get(
         constant('AUTHORS_GET_START_PATH').'_with_books_count',
         [AuthorController::class, 'indexWithBooksCount']
     );
