@@ -58,6 +58,8 @@ Route::middleware(['auth', 'checkAdmin'])->group(function () {
         ->name('books.store');
     Route::post('/books/{book}', [BookController::class, 'update'])
         ->name('books.update');
+    Route::delete('/books/{book}', [BookController::class, 'destroy'])
+        ->name('books.destroy');
 });
 
 Route::middleware('auth')->group(function () {
