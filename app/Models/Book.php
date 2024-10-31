@@ -16,7 +16,6 @@ class Book extends Model
      */
     protected $hidden = [
         'pivot',
-        'author_id',
         'updated_at',
     ];
 
@@ -27,6 +26,7 @@ class Book extends Model
      */
     protected $fillable = [
         'title',
+        'author_id',
         'publication_type',
         'day_of_publication',
         'created_at',
