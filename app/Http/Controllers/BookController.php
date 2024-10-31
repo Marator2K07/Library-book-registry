@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Book;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Book\BookCreateRequest;
+use App\Http\Requests\Book\BookUpdateRequest;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -116,9 +117,27 @@ class BookController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Book $book)
+    public function update(BookUpdateRequest $request, Book $book)
     {
-        //
+        $book->update([
+            'title' => $request->title,
+            'publication_type' => $request->publication_type,
+            'day_of_publication' => Carbon::createFromFormat(
+                'd.m.Y',
+                $request->day_of_publication
+            )->format('Y-m-d'),
+            'author_id' => $request->author_id
+        ]);
+        // обновляем связи между жанрами и книгой
+        $book->genres()->sync($request->genres_ids);
+
+        return redirect()->route(
+            'books.show',
+            [
+                'id' => $book->id,
+                'page' => $request->page // кидаем, но пока не используем
+            ]
+        );
     }
 
     /**
