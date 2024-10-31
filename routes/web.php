@@ -50,7 +50,9 @@ Route::middleware(['auth', 'checkAdmin'])->group(function () {
 Route::middleware(['auth', 'checkAdmin'])->group(function () {
     Route::get('/books', [BookController::class, 'index'])
         ->name('books.index');
-    Route::get('/books/find', [BookController::class, 'search'])
+    Route::get('/books/show/{id}', [BookController::class, 'show'])
+        ->name('books.show');
+    Route::get('/books/search', [BookController::class, 'search'])
         ->name('books.search');
     Route::post('/books', [BookController::class, 'store'])
         ->name('books.store');

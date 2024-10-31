@@ -79,6 +79,18 @@ class BookController extends Controller
     }
 
     /**
+     * Display the specified resource.
+     */
+    public function show(string $id)
+    {
+        $book = Book::with('author', 'genres')->find($id);
+
+        return Inertia::render('Book/BookDetails', [
+            'book' => $book
+        ]);
+    }
+
+    /**
      * Store a newly created resource in storage.
      */
     public function store(BookCreateRequest $request)
@@ -99,14 +111,6 @@ class BookController extends Controller
             'books.store',
             ['page' => $request->page]
         );
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(Book $book)
-    {
-        //
     }
 
     /**
