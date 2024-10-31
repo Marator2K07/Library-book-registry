@@ -2,6 +2,10 @@ import React, { useState } from 'react'
 
 export default function EntitySelector({
     className = '',
+    style = {
+        height: '105px',
+        overflowY: 'auto'
+    },
     entities = null,
     onSelect = null,
     emptyLabel = '...'
@@ -15,10 +19,7 @@ export default function EntitySelector({
 
     if (entities && onSelect && entities.length > 0) {
         return (
-            <div style={{
-                height: '105px',
-                overflowY: 'auto'
-            }}>
+            <div style={style}>
                 <ul>
                     {entities.map((entity) => (
                         <li
