@@ -1,3 +1,4 @@
+import EntityMultiSelector from '@/Components/EntityMultiSelector';
 import EntitySelector from '@/Components/EntitySelector';
 import InputLabel from '@/Components/InputLabel';
 import PrimaryButton from '@/Components/PrimaryButton';
@@ -15,17 +16,29 @@ export default function SearchFilterBooksForm({
 }) {
     const bookNameInput = useRef();
     const [authors, setAuthors] = useState([]);
+    const [genres, setGenres] = useState([]);
 
     useEffect(() => {
         const loadAuthors = async () => {
             setAuthors((await axios.get('/api/authors/get')).data);
         }
+        const loadGenres = async () => {
+            setGenres((await axios.get('/api/genres/get')).data);
+        }
         loadAuthors();
+        loadGenres();
     }, []);
 
-    // функция обратного вызова для выбора автора-фильтра
+    // функции обратного вызова
     const handleAuthorSelect = (author) => {
         setData('author_id', author.id);
+    }
+    const handleGenresSelect = (genreId) => {
+        if (data.genres_ids.includes(genreId)) {
+            setData('genres_ids', data.genres_ids.filter(id => id !== genreId));
+        } else {
+            setData('genres_ids', [...data.genres_ids, genreId]);
+        }
     }
 
     const {
@@ -35,8 +48,8 @@ export default function SearchFilterBooksForm({
     } = useForm({
         title: '',
         sort: 'asc',
-        author_filter: false,
-        author_id: null
+        author_id: null,
+        genres_ids: []
     });
 
     const handleSearch = (e) => {
@@ -123,9 +136,19 @@ export default function SearchFilterBooksForm({
                 </div>
 
                 <div className="flex gap-2 mt-3 items-center justify-start">
-                    <InputLabel value="Author filter: " />
+                    <div className="flex-col text-sm font-semibold leading-tight text-gray-800 dark:text-gray-200">
+                        <p>Author filter:</p>
+                        <p>(choose one)</p>
+                    </div>
                     <div className="text-xs font-semibold leading-tight text-gray-800 dark:text-gray-200">
                         <EntitySelector entities={authors} onSelect={handleAuthorSelect} />
+                    </div>
+                    <div className="flex-col text-sm font-semibold leading-tight text-gray-800 dark:text-gray-200">
+                        <p>Genres filter:</p>
+                        <p>(choose many)</p>
+                    </div>
+                    <div className="text-xs font-semibold leading-tight text-gray-800 dark:text-gray-200">
+                        <EntityMultiSelector entities={genres} onSelect={handleGenresSelect} />
                     </div>
                 </div>
 
