@@ -1,7 +1,8 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 export default function EntityMultiSelector({
     className = '',
+    initEntities = null,
     entities = null,
     onSelect = null,
     emptyLabel = '...'
@@ -18,6 +19,13 @@ export default function EntityMultiSelector({
         });
         onSelect(entity);
     };
+
+    // выбираем элементы при инициализации (если они есть)
+    useEffect(() => {
+        if (initEntities) {
+            setSelectedEntities(initEntities);
+        }
+    }, []);
 
     if (entities && onSelect && entities.length > 0) {
         return (

@@ -18,7 +18,7 @@ export default function EntitySelector({
         onSelect(entity);
     };
 
-    // выбираем компонент при инициализации (если он есть)
+    // выбираем элемент при инициализации (если он есть)
     useEffect(() => {
         if (initEntity) {
             setSelectedEntity(initEntity);
