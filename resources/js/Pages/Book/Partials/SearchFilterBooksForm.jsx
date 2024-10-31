@@ -14,10 +14,12 @@ export default function SearchFilterBooksForm({
     shown = true,
     setHidden = null
 }) {
-    const bookNameInput = useRef();
+
+    const titleInput = useRef();
     const [authors, setAuthors] = useState([]);
     const [genres, setGenres] = useState([]);
 
+    // подгружаем авторов и жанры
     useEffect(() => {
         const loadAuthors = async () => {
             setAuthors((await axios.get('/api/authors/get')).data);
@@ -58,7 +60,8 @@ export default function SearchFilterBooksForm({
         get(route('books.search', {
             title: data.title,
             sort: data.sort,
-            author: data.author
+            author_id: data.author_id,
+            genres_ids: data.genres_ids
         }));
     };
 
@@ -124,7 +127,7 @@ export default function SearchFilterBooksForm({
                         <div className="flex gap-4 items-center justify-center">
                             <TextInput
                                 id="title"
-                                ref={bookNameInput}
+                                ref={titleInput}
                                 value={data.title}
                                 onChange={(e) => {
                                     setData('title', e.target.value);

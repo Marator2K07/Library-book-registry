@@ -10,6 +10,7 @@ import { MAX_BOOK_AUTHOR_LENGTH_RATIO, MAX_BOOK_TITLE_LENGTH_RATIO } from '@/con
 import { publicationTypeToString } from '@/utils';
 import EntityList from '@/Components/EntityList';
 import SearchFilterBooksForm from './Partials/SearchFilterBooksForm';
+import CreateBookForm from './Partials/CreateBookForm';
 
 export default function Books() {
     const { books, links } = usePage().props;
@@ -124,11 +125,11 @@ export default function Books() {
                     </div>
                     {
                         <div className="absolute left-50 dark:bg-gray-700 rounded-lg">
-                            {/* <CreateBookForm
+                            <CreateBookForm
                                 className="container flex flex-col w-max rounded-lg bg-white p-6 m-5 shadow-[0px_14px_34px_0px_rgba(0,0,0,0.08)] ring-1 ring-white/[0.05] dark:bg-gray-800 dark:ring-red-700"
                                 shown={showCreateBookForm}
                                 setHidden={handleCreateBookForm}
-                            /> */}
+                            />
                         </div>
                     }
                 </div>
