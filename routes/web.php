@@ -52,6 +52,8 @@ Route::middleware(['auth', 'checkAdmin'])->group(function () {
         ->name('books.index');
     Route::get('/books/find', [BookController::class, 'search'])
         ->name('books.search');
+    Route::post('/books', [BookController::class, 'store'])
+        ->name('books.store');
 });
 
 Route::middleware('auth')->group(function () {

@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Book;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Book\BookCreateRequest;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -55,7 +57,10 @@ class BookController extends Controller
             ->paginate(constant('DEFAULT_PAGINATE_VALUE'));
         // корректная обработка пагинации с учетом входящих параметров
         $queryParams = http_build_query($request->all([
-            'title', 'sort', 'author_id', 'genres_ids'
+            'title',
+            'sort',
+            'author_id',
+            'genres_ids'
         ]));
         $prevPageLink = $books->previousPageUrl()
             ? $books->previousPageUrl() . '&' . $queryParams
@@ -76,9 +81,24 @@ class BookController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(BookCreateRequest $request)
     {
-        //
+        $book = Book::create([
+            'title' => $request->title,
+            'publication_type' => $request->publication_type,
+            'day_of_publication' => Carbon::createFromFormat(
+                'd.m.Y',
+                $request->day_of_publication
+            )->format('Y-m-d'),
+            'author_id' => $request->author_id
+        ]);
+        // задаем связи между жанрами и книгой
+        $book->genres()->sync($request->genres_ids);
+
+        return redirect()->route(
+            'books.store',
+            ['page' => $request->page]
+        );
     }
 
     /**
