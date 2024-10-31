@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('api')->group(function () {
     // для книг
     Route::get(
-        constant('BOOKS_GET_START_PATH').'_with_author_name',
+        constant('BOOKS_GET_START_PATH').'/with_author_name',
         [BooksController::class, 'indexWithAuthorName']
     );
     Route::get(
@@ -30,11 +30,11 @@ Route::middleware('api')->group(function () {
         [AuthorController::class, 'index']
     );
     Route::get(
-        constant('AUTHORS_GET_START_PATH').'_with_books_count',
+        constant('AUTHORS_GET_START_PATH').'/with_books_count',
         [AuthorController::class, 'indexWithBooksCount']
     );
     Route::get(
-        constant('AUTHORS_GET_START_PATH').'/{id}_with_books',
+        constant('AUTHORS_GET_START_PATH').'/{id}/with_books',
         [AuthorController::class, 'showWithBooks']
     );
     Route::post(
@@ -47,7 +47,7 @@ Route::middleware('api')->group(function () {
         [GenreController::class, 'index']
     );
     Route::get(
-        constant('GENRES_GET_START_PATH').'_with_books',
+        constant('GENRES_GET_START_PATH').'/with_books',
         [GenreController::class, 'indexWithBooks']
     );
     // для авторизации
