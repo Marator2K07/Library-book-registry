@@ -33,17 +33,24 @@ class BookController extends Controller
     {
         $title = $request->title;
         $sort = $request->sort;
-
+        $authorId = $request->author_id;
+        // предобработка по названию книги
         $books = Book::where('title', 'like', '%' . $title . '%')
-            ->with('author', 'genres')
+            ->with('author', 'genres');
+        // в случае наличия фильтрации по автору
+        if (!empty($authorId)) {
+            $books = $books->where('author_id', $authorId);
+        }
+        // заключительная обработка списка книг
+        $books = $books
             ->orderBy('title', $sort)
             ->paginate(constant('DEFAULT_PAGINATE_VALUE'));
         // корректная обработка пагинации с учетом входящих параметров
         $prevPageLink = $books->previousPageUrl()
-            ? $books->previousPageUrl() . '&title=' . $title . '&sort=' . $sort
+            ? $books->previousPageUrl() . '&title=' . $title . '&sort=' . $sort . '&author_id=' . $authorId
             : null;
         $nextPageLink = $books->nextPageUrl()
-            ? $books->nextPageUrl() . '&title=' . $title . '&sort=' . $sort
+            ? $books->nextPageUrl() . '&title=' . $title . '&sort=' . $sort . '&author_id=' . $authorId
             : null;
 
         return Inertia::render('Book/Books', [
