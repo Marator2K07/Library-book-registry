@@ -6,6 +6,7 @@ use App\Models\Book;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Book\BookCreateRequest;
 use App\Http\Requests\Book\BookUpdateRequest;
+use App\Services\LogService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -94,7 +95,7 @@ class BookController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(BookCreateRequest $request)
+    public function store(LogService $log, BookCreateRequest $request)
     {
         $book = Book::create([
             'title' => $request->title,
@@ -108,6 +109,8 @@ class BookController extends Controller
         // задаем связи между жанрами и книгой
         $book->genres()->sync($request->genres_ids);
 
+        $log->info('Создана книга', ['book' => $book]);
+
         return redirect()->route(
             'books.store',
             ['page' => $request->page]
@@ -117,8 +120,13 @@ class BookController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(BookUpdateRequest $request, Book $book)
-    {
+    public function update(
+        LogService $log,
+        BookUpdateRequest $request,
+        Book $book
+    ) {
+        $log->info('Обновление книги [начало]', ['book' => $book]);
+
         $book->update([
             'title' => $request->title,
             'publication_type' => $request->publication_type,
@@ -130,6 +138,8 @@ class BookController extends Controller
         ]);
         // обновляем связи между жанрами и книгой
         $book->genres()->sync($request->genres_ids);
+
+        $log->info('Обновление книги [конец]', ['book' => $book]);
 
         return redirect()->route(
             'books.show',
@@ -143,8 +153,13 @@ class BookController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Request $request, Book $book)
-    {
+    public function destroy(
+        LogService $log,
+        Request $request,
+        Book $book
+    ) {
+        $log->info('Удаление книги', ['book' => $book]);
+
         $book->delete();
 
         return redirect()->route(

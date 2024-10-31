@@ -32,14 +32,6 @@ class BooksController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
-     */
-    public function store(BookUpdateRequest $request)
-    {
-        //
-    }
-
-    /**
      * Выдача книги по указанному айди
      */
     public function show(string $id)
@@ -110,8 +102,8 @@ class BooksController extends Controller
             $this->authorsСompliance($user, $book);
             // удаление (+лог)
             $book->bookGenreRelatedRow()->delete();
-            $book->delete();
             $log->info('Удаление книги', ['book' => $book]);
+            $book->delete();
         } catch (\Throwable $th) {
             return response()->json(['error' => $th->getMessage()], 422);
         }

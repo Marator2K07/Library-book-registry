@@ -79,9 +79,9 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
                                             Welcome to our library!
                                         </p>
                                         <p className="mt-4">
-                                            /Ask your system administrator for details to<br/> log in as admin or regular user (author)\
+                                            /Ask your system administrator for login details\
                                         </p>
-                                        <div className="mt-5 text-sm/relaxed">
+                                        <div className="mt-5 text-sm/relaxed text-warning">
                                             !Warning - for normal access, authors must use API!
                                         </div>
                                     </div>
