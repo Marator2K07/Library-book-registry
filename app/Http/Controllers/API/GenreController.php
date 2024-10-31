@@ -13,7 +13,9 @@ class GenreController extends Controller
      */
     public function index()
     {
-        //
+        $genres = Genre::orderBy('name', 'asc')->get();
+
+        return response()->json($genres);
     }
 
     /**

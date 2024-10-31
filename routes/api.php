@@ -43,6 +43,10 @@ Route::middleware('api')->group(function () {
     );
     // для жанров
     Route::get(
+        constant('GENRES_GET_START_PATH'),
+        [GenreController::class, 'index']
+    );
+    Route::get(
         constant('GENRES_GET_START_PATH').'_with_books',
         [GenreController::class, 'indexWithBooks']
     );
