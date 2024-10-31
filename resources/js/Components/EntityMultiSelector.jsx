@@ -1,15 +1,21 @@
 import React, { useState } from 'react'
 
-export default function EntitySelector({
+export default function EntityMultiSelector({
     className = '',
     entities = null,
     onSelect = null,
     emptyLabel = '...'
 }) {
-    const [selectedEntity, setSelectedEntity] = useState(null);
+    const [selectedEntities, setSelectedEntities] = useState([]);
 
-    const handleSelect = (entity) => {
-        setSelectedEntity(entity);
+    const handleEntity = (entity) => {
+        setSelectedEntities(prevEntities => {
+            if (prevEntities.includes(entity)) {
+                return prevEntities.filter(id => id !== entity);
+            } else {
+                return [...prevEntities, entity];
+            }
+        });
         onSelect(entity);
     };
 
@@ -23,19 +29,18 @@ export default function EntitySelector({
                     {entities.map((entity) => (
                         <li
                             key={entity.id}
-                            onClick={() => handleSelect(entity)}
                             style={{
-                                backgroundColor: selectedEntity === entity ? 'red' : 'rgb(31,41,55)',
-                                cursor: 'pointer'
+                                backgroundColor: selectedEntities.includes(entity.id) ? 'red' : 'rgb(31,41,55)',
+                                cursor: 'pointer',
                             }}
-                            className={selectedEntity === entity ? 'selected' : ''}
+                            onClick={() => handleEntity(entity.id)}
                         >
                             {entity.name}
                         </li>
                     ))}
                 </ul>
             </div>
-        )
+        );
     } else {
         return (
             <div className={className}>
@@ -43,4 +48,5 @@ export default function EntitySelector({
             </div>
         )
     }
-}
+};
+
