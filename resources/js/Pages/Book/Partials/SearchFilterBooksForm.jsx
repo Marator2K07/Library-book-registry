@@ -1,4 +1,3 @@
-import Checkbox from '@/Components/Checkbox';
 import EntitySelector from '@/Components/EntitySelector';
 import InputLabel from '@/Components/InputLabel';
 import PrimaryButton from '@/Components/PrimaryButton';
@@ -14,45 +13,39 @@ export default function SearchFilterBooksForm({
     shown = true,
     setHidden = null
 }) {
-
     const bookNameInput = useRef();
     const [authors, setAuthors] = useState([]);
-    const [selectedAuthor, setSelectedAuthor] = useState(null);
 
     useEffect(() => {
         const loadAuthors = async () => {
             setAuthors((await axios.get('/api/authors/get')).data);
         }
-
         loadAuthors();
     }, []);
+
+    // функция обратного вызова для выбора автора-фильтра
+    const handleAuthorSelect = (author) => {
+        setData('author_id', author.id);
+    }
 
     const {
         data,
         setData,
-        get,
-        processing,
+        get
     } = useForm({
         title: '',
         sort: 'asc',
         author_filter: false,
-        author: selectedAuthor
+        author_id: null
     });
-
-    // функция обратного вызова для выбора автора-фильтра
-    const handleAuthorSelect = (author) => {
-        console.log(data);
-        if (data.author.id === author.id) {
-            setData('author', author.id);
-        }
-        setSelectedAuthor(author);
-    }
 
     const handleSearch = (e) => {
         e.preventDefault();
 
         get(route('books.search', {
-            title: data.title
+            title: data.title,
+            sort: data.sort,
+            author: data.author
         }));
     };
 
@@ -74,7 +67,7 @@ export default function SearchFilterBooksForm({
                     </p>
                 </header>
 
-                <form onSubmit={handleSearch} className="mt-4 space-y-6">
+                <div className="mt-4 space-y-6">
                     <div>
                         <div className="flex gap-4 items-center justify-start">
                             <InputLabel
@@ -90,7 +83,9 @@ export default function SearchFilterBooksForm({
                                         name="sortBy"
                                         value="asc"
                                         style={{ color: 'red' }}
-                                        onClick={() => setData('sort', 'asc')}
+                                        onClick={() => {
+                                            setData('sort', 'asc');
+                                        }}
                                         defaultChecked={data.sort === 'asc'}
                                     />
                                     Direct(A-Z)
@@ -102,7 +97,9 @@ export default function SearchFilterBooksForm({
                                         name="sortBy"
                                         value="desc"
                                         style={{ color: 'red' }}
-                                        onClick={() => setData('sort', 'desc')}
+                                        onClick={() => {
+                                            setData('sort', 'desc');
+                                        }}
                                         defaultChecked={data.sort === 'desc'}
                                     />
                                     Reverse(Z-A)
@@ -123,21 +120,18 @@ export default function SearchFilterBooksForm({
                             />
                         </div>
                     </div>
-                </form>
+                </div>
+
                 <div className="flex gap-2 mt-3 items-center justify-start">
-                    <Checkbox
-                        checked={data.author_filter}
-                        onChange={(e) => setData('author_filter', e.target.checked)}
-                    />
                     <InputLabel value="Author filter: " />
                     <div className="text-xs font-semibold leading-tight text-gray-800 dark:text-gray-200">
-                        <EntitySelector entities={authors} onSelect={handleAuthorSelect}/>
+                        <EntitySelector entities={authors} onSelect={handleAuthorSelect} />
                     </div>
                 </div>
 
                 <div className="flex flex-col items-center gap-4 mt-3">
                     <div className="flex items-center gap-4">
-                        <PrimaryButton disabled={processing}>Search</PrimaryButton>
+                        <PrimaryButton onClick={(e) => handleSearch(e)}>Search</PrimaryButton>
                         <SecondaryButton action={setHidden}>Back</SecondaryButton>
                     </div>
                 </div>
