@@ -34,9 +34,7 @@ export default function UpdateGenreForm({
         post(route('genres.update', { genre: genreForUpdate }), {
             preserveScroll: true,
             onSuccess: () => {
-                setTimeout(() => {
-                    setHidden();
-                }, DELAY_AFTER_SUCCESSFULLY_ACTION);
+                //
             },
             onError: (errors) => {
                 if (errors.name) {

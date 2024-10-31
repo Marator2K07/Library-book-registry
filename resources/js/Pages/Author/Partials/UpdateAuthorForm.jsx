@@ -42,9 +42,7 @@ export default function UpdateAuthorForm({
         post(route('authors.update', { author: authorForUpdate }), {
             preserveScroll: true,
             onSuccess: () => {
-                setTimeout(() => {
-                    setHidden();
-                }, DELAY_AFTER_SUCCESSFULLY_ACTION);
+                //
             },
             onError: (errors) => {
                 if (errors.name) {

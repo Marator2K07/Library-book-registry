@@ -87,7 +87,7 @@ class AuthorController extends Controller
             'authors.show',
             [
                 'id' => $author->id,
-                'page' => $request->page
+                'page' => $request->page // кидаем, но пока не используем
             ]
         );
     }
@@ -110,7 +110,7 @@ class AuthorController extends Controller
 
         return redirect()->route(
             'authors.index',
-            ['page' => $request->page]
+            ['page' => $request->page] // кидаем, но пока не используем
         );
     }
 }
