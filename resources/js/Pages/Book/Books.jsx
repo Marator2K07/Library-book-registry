@@ -111,10 +111,7 @@ export default function Books() {
                                         </td>
                                         <td className="p-1"><EntityList entities={book.genres} /></td>
                                         <td className="p-1">
-                                            {/* <NavLink href={route('books.show', { id: book.id })}>
-                                                Details
-                                            </NavLink> */}
-                                            <NavLink >
+                                            <NavLink href={route('books.show', { id: book.id })}>
                                                 Details
                                             </NavLink>
                                         </td>
