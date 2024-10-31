@@ -34,6 +34,7 @@ class BookController extends Controller
         $title = $request->title;
         $sort = $request->sort;
         $authorId = $request->author_id;
+        $genresIds = $request->genres_ids;
         // предобработка по названию книги
         $books = Book::where('title', 'like', '%' . $title . '%')
             ->with('author', 'genres');
@@ -41,16 +42,26 @@ class BookController extends Controller
         if (!empty($authorId)) {
             $books = $books->where('author_id', $authorId);
         }
+        // в случае выбора жанров для фильтрации
+        if (!empty($genresIds)) {
+            //return response()->json();
+            $books = $books->whereHas('genres', function ($query) use ($genresIds) {
+                $query->whereIn('genres.id', $genresIds);
+            });
+        }
         // заключительная обработка списка книг
         $books = $books
             ->orderBy('title', $sort)
             ->paginate(constant('DEFAULT_PAGINATE_VALUE'));
         // корректная обработка пагинации с учетом входящих параметров
+        $queryParams = http_build_query($request->all([
+            'title', 'sort', 'author_id', 'genres_ids'
+        ]));
         $prevPageLink = $books->previousPageUrl()
-            ? $books->previousPageUrl() . '&title=' . $title . '&sort=' . $sort . '&author_id=' . $authorId
+            ? $books->previousPageUrl() . '&' . $queryParams
             : null;
         $nextPageLink = $books->nextPageUrl()
-            ? $books->nextPageUrl() . '&title=' . $title . '&sort=' . $sort . '&author_id=' . $authorId
+            ? $books->nextPageUrl() . '&' . $queryParams
             : null;
 
         return Inertia::render('Book/Books', [
