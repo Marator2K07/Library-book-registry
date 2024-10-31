@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 export default function EntitySelector({
     className = '',
@@ -6,6 +6,7 @@ export default function EntitySelector({
         height: '105px',
         overflowY: 'auto'
     },
+    initEntity = null,
     entities = null,
     onSelect = null,
     emptyLabel = '...'
@@ -17,6 +18,13 @@ export default function EntitySelector({
         onSelect(entity);
     };
 
+    // выбираем компонент при инициализации (если он есть)
+    useEffect(() => {
+        if (initEntity) {
+            setSelectedEntity(initEntity);
+        }
+    }, []);
+
     if (entities && onSelect && entities.length > 0) {
         return (
             <div style={style}>
@@ -26,10 +34,17 @@ export default function EntitySelector({
                             key={entity.id}
                             onClick={() => handleSelect(entity)}
                             style={{
-                                backgroundColor: selectedEntity === entity ? 'red' : 'rgb(31,41,55)',
+                                backgroundColor:
+                                    selectedEntity && selectedEntity.id === entity.id
+                                        ? 'red'
+                                        : 'rgb(31,41,55)',
                                 cursor: 'pointer'
                             }}
-                            className={selectedEntity === entity ? 'selected' : ''}
+                            className={
+                                selectedEntity && selectedEntity === entity
+                                    ? 'selected'
+                                    : ''
+                            }
                         >
                             {entity.name}
                         </li>

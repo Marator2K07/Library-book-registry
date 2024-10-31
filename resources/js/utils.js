@@ -3,11 +3,11 @@ import { DIGITAL_BOOK_TYPE, GRAPHIC_BOOK_TYPE, PRINTED_BOOK_TYPE } from "./const
 export const publicationTypeToString = (type) => {
     switch (type) {
         case GRAPHIC_BOOK_TYPE:
-            return "Graphic";
+            return "GRAPHIC";
         case DIGITAL_BOOK_TYPE:
-            return "Digital";
+            return "DIGITAL";
         case PRINTED_BOOK_TYPE:
-            return "Printed";
+            return "PRINTED";
 
         default:
             return "Unknown";
