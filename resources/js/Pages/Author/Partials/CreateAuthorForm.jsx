@@ -11,7 +11,8 @@ import { useRef } from 'react';
 export default function CreateAuthorForm({
     className = '',
     shown = true,
-    setHidden = null }) {
+    setHidden = null
+}) {
 
     const nameInput = useRef();
     const emailInput = useRef();

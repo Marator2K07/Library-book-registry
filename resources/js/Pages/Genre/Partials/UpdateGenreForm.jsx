@@ -3,7 +3,6 @@ import InputLabel from '@/Components/InputLabel';
 import NavLink from '@/Components/NavLink';
 import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
-import { DELAY_AFTER_SUCCESSFULLY_ACTION } from '@/constants';
 import { Transition } from '@headlessui/react';
 import { useForm } from '@inertiajs/react';
 import { useRef } from 'react';
@@ -12,7 +11,8 @@ export default function UpdateGenreForm({
     className = '',
     shown = true,
     setHidden = null,
-    genreForUpdate = null }) {
+    genreForUpdate = null
+}) {
 
     const nameInput = useRef();
 

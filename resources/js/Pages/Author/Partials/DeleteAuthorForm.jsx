@@ -8,7 +8,8 @@ export default function DeleteAuthorForm({
     className = '',
     shown = true,
     setHidden = null,
-    authorForDeletion = null }) {
+    authorForDeletion = null
+}) {
 
     const {
         delete: destroy,

@@ -8,7 +8,8 @@ export default function DeleteGenreForm({
     className = '',
     shown = true,
     setHidden = null,
-    genreForDeletion = null }) {
+    genreForDeletion = null
+}) {
 
     const {
         delete: destroy,

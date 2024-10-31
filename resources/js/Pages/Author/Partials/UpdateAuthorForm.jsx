@@ -12,7 +12,8 @@ export default function UpdateAuthorForm({
     className = '',
     shown = true,
     setHidden = null,
-    authorForUpdate = null }) {
+    authorForUpdate = null
+}) {
 
     const nameInput = useRef();
     const emailInput = useRef();
